@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
               title: Text('Settings'),
             ),
             ListTile(
-              leading: Icon(Icons.contact_support),
+              leading: Icon(Icons.info /*contact_support*/),
               title: Text('About us'),
             ),
             ListTile(
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
               title: Text('Help & feedback'),
             ),
             ListTile(
-              leading: Icon(Icons.logout),
+              leading: Icon(Icons.exit_to_app /*logout*/),
               title: Text('Signout'),
               onTap: () async {
                 await _auth.signOut();
