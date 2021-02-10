@@ -8,35 +8,69 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xFF2B475D),
-          title: Text('News Detective'),
-          actions: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.exit_to_app),
-              textColor: Colors.white,
-              label: Text('Signout'),
-              onPressed: ()async {
+        backgroundColor: Color(0xFF2B475D),
+        title: Text('News Detective'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF2B475D),
+              ),
+              child: Text(
+                'Fake News Detection',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('Profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+            ),
+            ListTile(
+              leading: Icon(Icons.contact_support),
+              title: Text('About us'),
+            ),
+            ListTile(
+              leading: Icon(Icons.contact_mail),
+              title: Text('Contact us'),
+            ),
+            ListTile(
+              leading: Icon(Icons.feedback),
+              title: Text('Help & feedback'),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Signout'),
+              onTap: () async {
                 await _auth.signOut();
-                Navigator.pushReplacement(context,
+                Navigator.pushReplacement(
+                  context,
                   MaterialPageRoute(builder: (context) => Authenticate()),
                 );
               },
             ),
           ],
+        ),
       ),
       body: Container(
         child: Column(
-          children: [
-
-          ],
+          children: [],
         ),
-      ), 
+      ),
     );
   }
 }
