@@ -27,26 +27,13 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF2B475D),
+      backgroundColor: Color(0xFFFFFFFF),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 50.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 100.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 30.0,
-              ),
-              Center(
-                child: Text('Scholar Chat',
-                  style: TextStyle(color: Colors.white, fontSize: 30,
-                    fontWeight: FontWeight.bold,fontStyle: FontStyle.italic
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30.0,
-              ),
               SizedBox(
                 height: 10.0,
               ),
@@ -56,7 +43,7 @@ class _SignUpState extends State<SignUp> {
                   setState(() {name = value;});
                 },
                 decoration: textInputDecoration.copyWith(hintText: 'Name',
-                  hintStyle: TextStyle(color: Colors.white),),
+                  hintStyle: TextStyle(color: Colors.grey),),
                 validator: (val) =>
                     val.isEmpty ? 'Enter your Name' : null,
               ),
@@ -64,7 +51,7 @@ class _SignUpState extends State<SignUp> {
               TextFormField(
                 initialValue: email,
                 decoration: textInputDecoration.copyWith(hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.white),),
+                  hintStyle: TextStyle(color: Colors.grey),),
                 validator: (val) {
                   if (val.isEmpty || !val.contains('@')) {
                     return 'Please enter valid email';
@@ -84,7 +71,7 @@ class _SignUpState extends State<SignUp> {
                 initialValue: '',
                 keyboardType: TextInputType.text,
                 decoration: textInputDecoration.copyWith(hintText: 'Password',
-                  hintStyle: TextStyle(color: Colors.white),),    
+                  hintStyle: TextStyle(color: Colors.grey),),    
                 validator: (val) => val.length < 6
                   ? 'Enter password 6+ chars long'
                   : null,
@@ -95,46 +82,41 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 height: 15.0,
               ),
-              SizedBox(
-                width: double.infinity,
-                child: Expanded(
-                    child: RaisedButton(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(10.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(10.0),
-                        side: BorderSide(color: Colors.white)),
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(color: Color(0xFF2B475D), fontSize: 20),
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        _auth.signUpWithEmailAndPassword(email, password)
-                          .then((result) async => {
-                            if (result != null){
-                              await _userService.add(getUserData(result.uid))
-                                .then((uResult) => {
-                                  if (uResult != null){
-                                    Navigator.of(context).pushReplacementNamed('/home')
-                                  }
-                                }),
-                            }
-                            else{
-                              setState(() {
-                                error = 'please enter a valid email';
-                              })
-                            }
-                          });
-                      }
-                    },
-                  ),
-                ),
+              RaisedButton(
+              color: Color(0xff6200EE),
+              padding: const EdgeInsets.all(10.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(10.0),
+                  side: BorderSide(color: Color(0xff6200EE))),
+              child: Text(
+                'Sign Up',
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
+              onPressed: () async {
+                if (_formKey.currentState.validate()) {
+                  _auth.signUpWithEmailAndPassword(email, password)
+                    .then((result) async => {
+                      if (result != null){
+                        await _userService.add(getUserData(result.uid))
+                          .then((uResult) => {
+                            if (uResult != null){
+                              Navigator.of(context).pushReplacementNamed('/home')
+                            }
+                          }),
+                      }
+                      else{
+                        setState(() {
+                          error = 'please enter a valid email';
+                        })
+                      }
+                    });
+                }
+              },
+                ),
               SizedBox(height: 12.0),
               Text(
                 error,
-                style: TextStyle(color: Colors.amber, fontSize: 14.0),
+                style: TextStyle(color: Color(0xFFB00020), fontSize: 14.0),
               ),
             ]
           )

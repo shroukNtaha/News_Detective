@@ -15,16 +15,16 @@ class _AuthenticateState extends State<Authenticate> {
             SizedBox(height: 150.0),
             SizedBox(height: 15.0),
             Text(
-              '"If you in panic get a Mechanic"',
+              '"If you intersted to read news"',
               style: TextStyle(
                   color: Color(0xff16071e),
                   fontSize: 17.0,
-                  fontStyle: FontStyle.italic,
+                  //fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 75.0),
             RaisedButton(
-              color: Color(0xfff9811e),
+              color: Color(0xff6200EE),
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed("/signup");
               },
@@ -32,7 +32,6 @@ class _AuthenticateState extends State<Authenticate> {
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
               child: Text(
-                //translate(context, 'Create a new account'),
                 'Create a new account',
                 textAlign: TextAlign.center,
                 style:
@@ -52,11 +51,10 @@ class _AuthenticateState extends State<Authenticate> {
                       style: TextStyle(
                           fontSize: 17.0,
                           fontFamily: 'Georgia',
-                          color: Color(0xfff9811e)),
+                          color: Color(0xff3700B3)),
                     ),
                     FlatButton(
                       onPressed: () {
-                        print("login pressed");
                         Navigator.of(context).pushReplacementNamed("/login");
                       },
                       child: Text(
