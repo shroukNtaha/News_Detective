@@ -1,6 +1,6 @@
-import 'package:News_Detective/common/Repository.dart';
+import 'package:news_detective/common/Repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:News_Detective/models/userModel.dart';
+import 'package:news_detective/models/userModel.dart';
 
 class UserService {
   Repository _rep = Repository("user");

@@ -6,6 +6,7 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,30 +15,47 @@ class _AuthenticateState extends State<Authenticate> {
           child: Column(children: <Widget>[
             SizedBox(height: 150.0),
             SizedBox(height: 15.0),
-            Text(
+            /*Text(
               '"If you intersted to read news"',
               style: TextStyle(
                   color: Color(0xff16071e),
                   fontSize: 17.0,
                   //fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold),
-            ),
+            ),*/
             SizedBox(height: 75.0),
-            RaisedButton(
-              color: Color(0xff6200EE),
-              onPressed: () {
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Color(0xff6200EE),
+                padding: EdgeInsets.all(15.0),
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
+              ), 
+              onPressed: () { 
                 Navigator.of(context).pushReplacementNamed("/signup");
               },
-              padding: EdgeInsets.all(15.0),
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)),
               child: Text(
                 'Create a new account',
                 textAlign: TextAlign.center,
                 style:
                     TextStyle(fontSize: 25.0, fontFamily: 'Georgia', height: 1),
               ),
-              textColor: Colors.white,
+            ),
+            SizedBox(height: 75.0),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Color(0xff6200EE),
+                padding: EdgeInsets.all(15.0),
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
+              ), 
+              onPressed: () { 
+                Navigator.of(context).pushReplacementNamed("/home");
+              },
+              child: Text(
+                'Go Home',
+                textAlign: TextAlign.center,
+                style:
+                    TextStyle(fontSize: 25.0, fontFamily: 'Georgia', height: 1),
+              ),
             ),
             Expanded(
               child: Align(
@@ -53,7 +71,7 @@ class _AuthenticateState extends State<Authenticate> {
                           fontFamily: 'Georgia',
                           color: Color(0xff3700B3)),
                     ),
-                    FlatButton(
+                    TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacementNamed("/login");
                       },

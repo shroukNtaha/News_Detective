@@ -1,5 +1,6 @@
-import 'package:News_Detective/screens/authenticate/authenticate.dart';
-import 'package:News_Detective/services/auth.dart';
+import 'package:news_detective/screens/authenticate/authenticate.dart';
+import 'package:news_detective/services/apiService.dart';
+import 'package:news_detective/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -8,6 +9,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  APIService apiService = APIService();
+  void getNews()async{
+    List<dynamic> news = await apiService.getNews();
+    print(news);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getNews();
+  }
+
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {

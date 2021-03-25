@@ -1,7 +1,7 @@
-import 'package:News_Detective/models/user.dart';
-import 'package:News_Detective/screens/authenticate/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'models/user.dart';
+import 'screens/authenticate/authenticate.dart';
 
 
 

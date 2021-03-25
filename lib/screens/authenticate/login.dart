@@ -1,5 +1,5 @@
-import 'package:News_Detective/services/auth.dart';
-import 'package:News_Detective/themes/input.dart';
+import 'package:news_detective/services/auth.dart';
+import 'package:news_detective/themes/input.dart';
 import 'package:flutter/material.dart';
 
 class LogIn extends StatefulWidget {
@@ -64,12 +64,14 @@ class _LogInState extends State<LogIn> {
                 SizedBox(
                   height: 15.0,
                 ),
-                RaisedButton(
-                  color: Color(0xff6200EE),
-                  padding: const EdgeInsets.all(10.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0),
-                      side: BorderSide(color: Color(0xff6200EE))),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Color(0xff6200EE) ,
+                    padding: const EdgeInsets.all(10.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                        side: BorderSide(color: Color(0xff6200EE))
+                    ), 
+                  ),
                   child: Text(
                     'Sign In',
                     style: TextStyle(color: Colors.white, fontSize: 20),
@@ -87,7 +89,7 @@ class _LogInState extends State<LogIn> {
                       }
                     }
                   },
-                ),   
+                ), 
                 SizedBox(height: 12.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

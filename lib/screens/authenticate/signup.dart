@@ -1,7 +1,7 @@
-import 'package:News_Detective/models/userModel.dart';
-import 'package:News_Detective/services/auth.dart';
-import 'package:News_Detective/services/userService.dart';
-import 'package:News_Detective/themes/input.dart';
+import 'package:news_detective/models/userModel.dart';
+import 'package:news_detective/services/auth.dart';
+import 'package:news_detective/services/userService.dart';
+import 'package:news_detective/themes/input.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -18,6 +18,11 @@ class _SignUpState extends State<SignUp> {
   String email = '';
   String password = '';
   String error = '';
+
+  String initValue="Select your Birth Date";
+  bool isDateSelected= false;
+  DateTime birthDate; // instance of DateTime
+  String birthDateInString;
 
   UserModel getUserData(uId) {
     return new UserModel(
@@ -46,6 +51,25 @@ class _SignUpState extends State<SignUp> {
                   hintStyle: TextStyle(color: Colors.grey),),
                 validator: (val) =>
                     val.isEmpty ? 'Enter your Name' : null,
+              ),
+              SizedBox(height: 7.0,),
+              GestureDetector(
+                child: new Icon(Icons.calendar_today),
+                onTap: ()async{
+                  final datePick= await showDatePicker(
+                      context: context,
+                      initialDate: new DateTime.now(),
+                      firstDate: new DateTime(1900),
+                      lastDate: new DateTime(2100)
+                    );
+                  if(datePick!=null && datePick!=birthDate){
+                    setState(() {
+                      birthDate=datePick; 
+                      isDateSelected=true;
+                      birthDateInString = "${birthDate.month}/${birthDate.day}/${birthDate.year}"; 
+                    });
+                  }
+                }
               ),
               SizedBox(height: 7.0,),
               TextFormField(
@@ -82,37 +106,38 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 height: 15.0,
               ),
-              RaisedButton(
-              color: Color(0xff6200EE),
-              padding: const EdgeInsets.all(10.0),
-              shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  side: BorderSide(color: Color(0xff6200EE))),
-              child: Text(
-                'Sign Up',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: () async {
-                if (_formKey.currentState.validate()) {
-                  _auth.signUpWithEmailAndPassword(email, password)
-                    .then((result) async => {
-                      if (result != null){
-                        await _userService.add(getUserData(result.uid))
-                          .then((uResult) => {
-                            if (uResult != null){
-                              Navigator.of(context).pushReplacementNamed('/home')
-                            }
-                          }),
-                      }
-                      else{
-                        setState(() {
-                          error = 'please enter a valid email';
-                        })
-                      }
-                    });
-                }
-              },
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xff6200EE) ,
+                  padding: const EdgeInsets.all(10.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xff6200EE))),
+                ), 
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
+                onPressed: () async {
+                  if (_formKey.currentState.validate()) {
+                    _auth.signUpWithEmailAndPassword(email, password)
+                      .then((result) async => {
+                        if (result != null){
+                          await _userService.add(getUserData(result.uid))
+                            .then((uResult) => {
+                              if (uResult != null){
+                                Navigator.of(context).pushReplacementNamed('/home')
+                              }
+                            }),
+                        }
+                        else{
+                          setState(() {
+                            error = 'this email is already used';
+                          })
+                        }
+                      });
+                  }
+                },
+              ),
               SizedBox(height: 12.0),
               Text(
                 error,

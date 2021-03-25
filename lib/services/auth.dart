@@ -1,4 +1,4 @@
-import 'package:News_Detective/models/user.dart';
+import 'package:news_detective/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
