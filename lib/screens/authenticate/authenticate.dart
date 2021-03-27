@@ -19,10 +19,11 @@ class _AuthenticateState extends State<Authenticate> {
               Image(
                 image: AssetImage("assets/detictive_news.jpeg"),
               ),
-              SizedBox(height: 75.0),
+              SizedBox(height: 50.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.black,
-                  padding: EdgeInsets.fromLTRB(100.0,20.0, 100.0, 20.0),
+                  //padding: EdgeInsets.fromLTRB(100.0,20.0, 100.0, 20.0),
+                  minimumSize: Size(230.0, 70.0),
                   shape: new RoundedRectangleBorder(
                     side: BorderSide(color: Colors.black),
                     borderRadius: new BorderRadius.circular(10.0)),
@@ -40,7 +41,8 @@ class _AuthenticateState extends State<Authenticate> {
               SizedBox(height: 25.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.white,
-                  padding: EdgeInsets.fromLTRB(80.0,20.0, 80.0, 20.0),
+                  //padding: EdgeInsets.fromLTRB(80.0,20.0, 80.0, 20.0),
+                  minimumSize: Size(230.0, 70.0),
                   shape: new RoundedRectangleBorder(
                     side: BorderSide(color: Colors.black , width: 2.5),
                     borderRadius: new BorderRadius.circular(10.0)),
