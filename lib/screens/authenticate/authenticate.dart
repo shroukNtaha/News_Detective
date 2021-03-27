@@ -10,88 +10,65 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          decoration: new BoxDecoration(color: Colors.white),
-          child: Column(children: <Widget>[
-            SizedBox(height: 150.0),
-            SizedBox(height: 15.0),
-            /*Text(
-              '"If you intersted to read news"',
-              style: TextStyle(
-                  color: Color(0xff16071e),
-                  fontSize: 17.0,
-                  //fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold),
-            ),*/
-            SizedBox(height: 75.0),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Color(0xff6200EE),
-                padding: EdgeInsets.all(15.0),
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)),
-              ), 
-              onPressed: () { 
-                Navigator.of(context).pushReplacementNamed("/signup");
-              },
-              child: Text(
-                'Create a new account',
-                textAlign: TextAlign.center,
-                style:
-                    TextStyle(fontSize: 25.0, fontFamily: 'Georgia', height: 1),
+      backgroundColor: Color(0xffA755BC),
+      body: Center(
+        child: Container(
+            //decoration: new BoxDecoration(color: Color(0xffA755BC)),
+            child: Column(children: <Widget>[
+              SizedBox(height: 100.0),
+              Image(
+                image: AssetImage("assets/detictive_news.jpeg"),
               ),
-            ),
-            SizedBox(height: 75.0),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Color(0xff6200EE),
-                padding: EdgeInsets.all(15.0),
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)),
-              ), 
-              onPressed: () { 
-                Navigator.of(context).pushReplacementNamed("/home");
-              },
-              child: Text(
-                'Go Home',
-                textAlign: TextAlign.center,
-                style:
-                    TextStyle(fontSize: 25.0, fontFamily: 'Georgia', height: 1),
-              ),
-            ),
-            Expanded(
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Have an Account? ",
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          fontFamily: 'Georgia',
-                          color: Color(0xff3700B3)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacementNamed("/login");
-                      },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            fontSize: 27.0,
-                            fontFamily: 'Georgia',
-                            color: Color(0xff16071e),
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
+              SizedBox(height: 75.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.black,
+                  padding: EdgeInsets.fromLTRB(100.0,20.0, 100.0, 20.0),
+                  shape: new RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.black),
+                    borderRadius: new BorderRadius.circular(10.0)),
+                ), 
+                onPressed: () { 
+                  Navigator.of(context).pushReplacementNamed("/signup");
+                },
+                child: Text(
+                  'SIGN UP',
+                  textAlign: TextAlign.center,
+                  style:
+                      TextStyle(color: Colors.white , fontSize: 20.0, fontWeight: FontWeight.bold,/*fontFamily: 'Georgia', height: 1,*/),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            )
-          ])),
+              SizedBox(height: 25.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.white,
+                  padding: EdgeInsets.fromLTRB(80.0,20.0, 80.0, 20.0),
+                  shape: new RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.black , width: 2.5),
+                    borderRadius: new BorderRadius.circular(10.0)),
+                ), 
+                onPressed: () { 
+                  Navigator.of(context).pushReplacementNamed("/login");
+                },
+                child: Text(
+                  'LOG IN',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black , fontSize: 20.0, fontWeight: FontWeight.bold,/*fontFamily: 'Georgia', height: 1,*/),
+                ),
+              ),
+              SizedBox(height: 40.0),
+              InkWell(
+                child: new Text("TAKE ME TO NEWS" ,
+                  style: TextStyle(fontSize: 20.0,decoration: TextDecoration.underline,
+                    color: Colors.black,),),
+                onTap: () => Navigator.of(context).pushReplacementNamed("/home") 
+              ),
+              /*GestureDetector(
+                child: new Text("TAKE ME TO NEWS" ,
+                  style: TextStyle(fontSize: 20.0,decoration: TextDecoration.underline,
+                    color: Colors.black,),),
+                onTap: () => Navigator.of(context).pushReplacementNamed("/home") 
+              ),*/
+            ])),
+      ),
     );
   }
 }

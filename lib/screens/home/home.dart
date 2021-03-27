@@ -1,5 +1,5 @@
 import 'package:news_detective/screens/authenticate/authenticate.dart';
-import 'package:news_detective/services/apiService.dart';
+import 'package:news_detective/services/newsService.dart';
 import 'package:news_detective/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  APIService apiService = APIService();
+  NewsService apiService = NewsService();
   void getNews()async{
     List<dynamic> news = await apiService.getNews();
     print(news);

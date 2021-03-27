@@ -5,7 +5,7 @@ const kAPIkey = "ddd584655331475388eb27ed2de64898";
 const kurl = "https://newsapi.org/v2/top-headlines?";
 //https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=$kAPIkey
 
-class APIService{
+class NewsService{
 
   Future <List<dynamic>> getNews() async {
     String url = "https://newsapi.org/v2/top-headlines?country=eg&category=sports&apiKey=$kAPIkey";
