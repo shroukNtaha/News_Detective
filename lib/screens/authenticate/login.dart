@@ -110,6 +110,7 @@ class _LogInState extends State<LogIn> {
                                 if (result == null) {
                                   setState(() {
                                     error = 'Invalid email or password';
+                                    loading = false;
                                   });
                                 } else {
                                   Navigator.of(context).pushReplacementNamed("/home");

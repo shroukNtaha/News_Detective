@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getNews();
-    getdata();
+    //getdata();
   }
   bool loading = false;
   AuthService _auth = AuthService();

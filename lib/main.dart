@@ -8,35 +8,11 @@ import 'screens/home/home.dart';
 import 'services/auth.dart';
 import 'wrapper.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:mysql1/mysql1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-
-  //////////////
-  final conn = await MySqlConnection.connect(ConnectionSettings(
-      host: 'localhost', port: 8080, user: 'root',password: 'root', db: 'detect_news'));
-  // Create a table
-  await conn.query(
-      'CREATE TABLE users (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255), email varchar(255), age int)');
-
-  // Insert some data
-  var result = await conn.query(
-      'insert into users (name, email, age) values (?, ?, ?)',
-      ['Bob', 'bob@bob.com', 25]);
-  print('Inserted row id=${result.insertId}');
-
-  // Query the database using a parameterized query
-  var results = await conn.query(
-      'select name, email, age from users where id = ?', [result.insertId]);
-  for (var row in results) {
-    print('Name: ${row[0]}, email: ${row[1]} age: ${row[2]}');
-  }
-  await conn.close();
-
-  ///////////////////
 }
 
 class MyApp extends StatelessWidget {
