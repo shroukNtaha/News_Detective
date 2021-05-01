@@ -4,12 +4,15 @@ class UserModel {
   String email;
   String userId;
   DateTime createdOn;
-  bool isActive;
+  String gender;
+  String rangeAge;
 
   UserModel({
     this.email,
     this.name,
     this.userId,
+    this.gender,
+    this.rangeAge,
   });
 
   toJson() {
@@ -18,7 +21,8 @@ class UserModel {
       "name": name,
       "email": email,
       "createdOn": DateTime.now(),
-      "isActive": true,
+      "gender": gender,
+      "rangeAge": rangeAge,
     };
   }
 
@@ -28,6 +32,7 @@ class UserModel {
         userId = snapshot['userId'] ?? '',
         createdOn = snapshot['createdOn'].toDate() ?? '',
         email = snapshot['email'] ?? '',
-        isActive = snapshot['isActive'] ?? '';
+        gender = snapshot['gender'] ?? '',
+        rangeAge = snapshot['rangeAge'] ?? '';
 
 }

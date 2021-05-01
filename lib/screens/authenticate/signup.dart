@@ -1,3 +1,4 @@
+import 'package:loading/loading.dart';
 import 'package:news_detective/models/userModel.dart';
 import 'package:news_detective/services/auth.dart';
 import 'package:news_detective/services/userService.dart';
@@ -14,139 +15,201 @@ class _SignUpState extends State<SignUp> {
   final AuthService _auth = AuthService();
   UserService _userService = new UserService();
 
+  bool loading = false;
+
   String name = '';
   String email = '';
   String password = '';
   String error = '';
-
-  String initValue="Select your Birth Date";
-  bool isDateSelected= false;
-  DateTime birthDate; // instance of DateTime
-  String birthDateInString;
+  String rangeAge = 'Select Age Range';
+  String gender = 'Select Gender';
 
   UserModel getUserData(uId) {
     return new UserModel(
-        name: name, userId: uId, email: email);
+        name: name, userId: uId, email: email , gender: gender , rangeAge: rangeAge);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 100.0),
-        child: Form(
-          key: _formKey,
+    return loading ? Loading() : Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Color(0xffA755BC),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white , size: 24,),
+          onPressed: () => Navigator.of(context).pushReplacementNamed('/'),
+        ),
+        title: Text("ٌRegistration" ,style: TextStyle(color: Colors.white,fontSize: 24.0),),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 100.0),
           child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 10.0,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /*IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => 
+                  Navigator.of(context).pushReplacementNamed('/')
               ),
-              TextFormField(
-                initialValue: name,
-                onChanged: (String value) {
-                  setState(() {name = value;});
-                },
-                decoration: textInputDecoration.copyWith(hintText: 'Name',
-                  hintStyle: TextStyle(color: Colors.grey),),
-                validator: (val) =>
-                    val.isEmpty ? 'Enter your Name' : null,
-              ),
-              SizedBox(height: 7.0,),
-              GestureDetector(
-                child: new Icon(Icons.calendar_today),
-                onTap: ()async{
-                  final datePick= await showDatePicker(
-                      context: context,
-                      initialDate: new DateTime.now(),
-                      firstDate: new DateTime(1900),
-                      lastDate: new DateTime(2100)
-                    );
-                  if(datePick!=null && datePick!=birthDate){
-                    setState(() {
-                      birthDate=datePick; 
-                      isDateSelected=true;
-                      birthDateInString = "${birthDate.month}/${birthDate.day}/${birthDate.year}"; 
-                    });
-                  }
-                }
-              ),
-              SizedBox(height: 7.0,),
-              TextFormField(
-                initialValue: email,
-                decoration: textInputDecoration.copyWith(hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.grey),),
-                validator: (val) {
-                  if (val.isEmpty || !val.contains('@')) {
-                    return 'Please enter valid email';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {email = value;});
-                },
-              ),
-              SizedBox(height: 7.0,),
-              TextFormField(
-                autofocus: false,
-                enableSuggestions: false,
-                autocorrect: false,
-                obscureText: true,
-                initialValue: '',
-                keyboardType: TextInputType.text,
-                decoration: textInputDecoration.copyWith(hintText: 'Password',
-                  hintStyle: TextStyle(color: Colors.grey),),    
-                validator: (val) => val.length < 6
-                  ? 'Enter password 6+ chars long'
-                  : null,
-                onChanged: (value) {
-                  setState(() {password = value;});
-                },
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Color(0xff6200EE) ,
-                  padding: const EdgeInsets.all(10.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10.0),
-                    side: BorderSide(color: Color(0xff6200EE))),
-                ), 
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    _auth.signUpWithEmailAndPassword(email, password)
-                      .then((result) async => {
-                        if (result != null){
-                          await _userService.add(getUserData(result.uid))
-                            .then((uResult) => {
-                              if (uResult != null){
-                                Navigator.of(context).pushReplacementNamed('/home')
-                              }
-                            }),
-                        }
-                        else{
-                          setState(() {
-                            error = 'this email is already used';
-                          })
-                        }
-                      });
-                  }
-                },
-              ),
-              SizedBox(height: 12.0),
+              SizedBox(height: 30.0,),
               Text(
-                error,
-                style: TextStyle(color: Color(0xFFB00020), fontSize: 14.0),
+                'Sign up',
+                style: TextStyle(fontSize: 50.0 , /*fontFamily: "Comfortaa"*/),
+              ),*/
+              SizedBox(height: 20.0,),
+              Center(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 10.0,),
+                      TextFormField(
+                        initialValue: name,
+                        onChanged: (String value) {
+                          setState(() {name = value;});
+                        },
+                        decoration: textInputDecoration.copyWith(hintText: 'Name',
+                          hintStyle: TextStyle(color: Colors.grey),),
+                        validator: (val) =>
+                          val.isEmpty ? 'Enter your Name' : null,
+                      ),
+                      SizedBox(height: 7.0,),
+                      TextFormField(
+                        initialValue: email,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: textInputDecoration.copyWith(hintText: 'Email',
+                          hintStyle: TextStyle(color: Colors.grey),),
+                        validator: (val) {
+                          if (val.isEmpty || !val.contains('@')) {
+                            return 'Enter valid email';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {email = value;});
+                        },
+                      ),
+                      SizedBox(height: 7.0,),
+                      TextFormField(
+                        autofocus: false,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        obscureText: true,
+                        initialValue: '',
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: textInputDecoration.copyWith(hintText: 'Password',
+                          hintStyle: TextStyle(color: Colors.grey),),    
+                        validator: (val) => val.length < 6
+                          ? 'Enter password 6+ chars long'
+                          : null,
+                        onChanged: (value) {
+                          setState(() {password = value;});
+                        },
+                      ),
+                      SizedBox(height: 15.0,),
+                      DropdownButtonFormField<String>(
+                        decoration: textInputDecoration.copyWith(hintText: 'Age',
+                          hintStyle: TextStyle(color: Colors.grey),),
+                        value: rangeAge,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        iconSize: 20,
+                        elevation: 16,
+                        hint: Text('Select Age Range'),
+                        validator: (val) =>
+                          val == 'Select Age Range' ? 'Select your Age Range' : null,
+                        items: <String>['Select Age Range','15-25','26-35','36-45','46-55','56-65','66']
+                            .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                            }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            rangeAge = value;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 7.0,),
+                      DropdownButtonFormField<String>(
+                        decoration: textInputDecoration.copyWith(hintText: 'Gender',
+                          hintStyle: TextStyle(color: Colors.grey),),
+                        value: gender,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        iconSize: 20,
+                        elevation: 16,
+                        hint: Text('Select Gender'),
+                        validator: (val) =>
+                          val == 'Select Gender' ? 'Select your Gender' : null,
+                        items: <String>['Select Gender','Male','Female','Other']
+                            .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                            }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            gender = value;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 20.0,),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.black/*Color(0xffA755BC)*/ ,
+                            //padding: const EdgeInsets.all(10.0),
+                            minimumSize: Size.fromHeight(70.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(10.0),
+                              //side: BorderSide(color: Color(0xffA755BC)),
+                            ), 
+                          ), 
+                          child: Text(
+                            'SIGN UP',
+                            style: TextStyle(color: Colors.white, fontSize: 24),
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              _auth.signUpWithEmailAndPassword(email, password)
+                                .then((result) async => {
+                                  if (result != null){
+                                    await _userService.add(getUserData(result.uid))
+                                      .then((uResult) => {
+                                        if (uResult != null){
+                                          Navigator.of(context).pushReplacementNamed('/home')
+                                        }
+                                      }
+                                    ),
+                                  }
+                                  else{
+                                    setState(() {
+                                      error = 'this email is already used';
+                                    })
+                                  }
+                                }
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 12.0),
+                      Text(
+                        error,
+                        style: TextStyle(color: Color(0xFFB00020), fontSize: 14.0),
+                      ),
+                    ]
+                  ),
+                ),
               ),
             ]
-          )
+          ),
         )
       )
     );
   }
 }
+
