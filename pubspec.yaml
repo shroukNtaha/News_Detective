@@ -44,8 +44,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  image_path_ios: 'assets/images/fake.png'
-  image_path_android: 'assets/images/fake.png'
+  image_path: 'assets/finalicon.png'
   android: true
   ios: true
   
