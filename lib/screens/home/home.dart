@@ -64,14 +64,10 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFF2B475D),
+                color: Color(0xffA755BC),
               ),
-              child: Text(
-                'Fake News Detection',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                ),
+              child: Image(
+                image: AssetImage("assets/detictive_news.jpeg"),
               ),
             ),
             ListTile(
