@@ -2,6 +2,9 @@ import 'package:news_detective/screens/authenticate/authenticate.dart';
 import 'package:news_detective/services/newsService.dart';
 import 'package:news_detective/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_detective/themes/input.dart';
+
+GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class Home extends StatefulWidget {
   @override
@@ -9,9 +12,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
+  List<CategoryButton> categories = [
+    CategoryButton('Sports'),
+    CategoryButton('Politics'),
+    CategoryButton('Arts'),
+    CategoryButton('Health'),
+    CategoryButton('Others'),
+  ];
   NewsService apiService = NewsService();
-  void getNews()async{
+  void getNews() async {
     List<dynamic> news = await apiService.getNews();
     print(news);
   }
@@ -26,10 +35,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF2B475D),
-        title: Text('News Detective'),
-      ),
+      backgroundColor: Colors.white,
+      key: _scaffoldKey,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -80,9 +87,148 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      body: Container(
+      body: SafeArea(
         child: Column(
-          children: [],
+          children: [
+            AppBar(categories: categories),
+            ListView(
+              scrollDirection: Axis.vertical,
+              children: [],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AppBar extends StatelessWidget {
+  const AppBar({
+    Key key,
+    @required this.categories,
+  }) : super(key: key);
+
+  final List<CategoryButton> categories;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Container(
+          color: Color(0xffA755BC),
+          height: 150,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+                onPressed: () => _scaffoldKey.currentState.openDrawer(),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Image.asset('assets/detictive_news.jpeg'),
+            ],
+          ),
+        ),
+        Container(
+          color: Color(0xffA755BC),
+          height: 60,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: TextField(
+                    cursorColor: Colors.black,
+                    obscureText: true,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                    onChanged: null,
+                    decoration: decor,
+                  ),
+                ),
+                Expanded(
+                  child: Icon(Icons.search),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(10),
+          color: Color(0xffA755BC),
+          height: 60,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: categories,
+          ),
+        ),
+        Container(
+          color: Color(0xffA755BC),
+          height: 60,
+          child: Row(
+            children: [
+              Expanded(
+                child: FlatButton(
+                  color: Colors.white,
+                  height: 60,
+                  onPressed: () {},
+                  child: Text(
+                    'Home',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: FlatButton(
+                  height: 60,
+                  onPressed: () {},
+                  child: Text(
+                    'Detect News',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CategoryButton extends StatelessWidget {
+  final categoryName;
+  CategoryButton(this.categoryName);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            side: BorderSide(color: Colors.grey)),
+        color: Colors.white,
+        onPressed: () {},
+        child: Text(
+          categoryName,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+          ),
         ),
       ),
     );
