@@ -9,8 +9,6 @@ import 'services/auth.dart';
 import 'wrapper.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-
-//void main() => runApp(MyApp());
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -19,11 +17,13 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
     return StreamProvider<UserAuth>.value(
       value: AuthService().user,
       child: MaterialApp(
+        //theme: ThemeData(fontFamily: 'Comfortaa'),
         builder: (context, widget) => ResponsiveWrapper.builder(
           BouncingScrollWrapper.builder(context, widget),
           maxWidth: 1200,

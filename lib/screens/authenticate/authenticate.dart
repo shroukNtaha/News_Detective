@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading/loading.dart';
 
 class Authenticate extends StatefulWidget {
   @override
@@ -7,14 +8,17 @@ class Authenticate extends StatefulWidget {
 
 class _AuthenticateState extends State<Authenticate> {
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Color(0xffA755BC),
       body: Center(
         child: Container(
             //decoration: new BoxDecoration(color: Color(0xffA755BC)),
-            child: Column(children: <Widget>[
+            child: Column(
+              children: <Widget>[
               SizedBox(height: 100.0),
               Image(
                 image: AssetImage("assets/detictive_news.jpeg"),
