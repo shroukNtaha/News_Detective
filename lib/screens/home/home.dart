@@ -118,10 +118,10 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   AppBar(categories: categories),
-                  ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [],
-                  ),
+                  // ListView(
+                  //   scrollDirection: Axis.vertical,
+                  //   children: [],
+                  // ),
                 ],
               ),
             ),
