@@ -5,6 +5,8 @@ import 'package:news_detective/services/auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:mysql1/mysql1.dart';
 import 'package:news_detective/themes/input.dart';
+import 'package:news_detective/screens/profile/profile_screen.dart';
+import 'package:news_detective/screens/detectPage/DetectPage.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -83,6 +85,12 @@ class _HomeState extends State<Home> {
                   ListTile(
                     leading: Icon(Icons.account_circle),
                     title: Text('Profile'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileScreen()));
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.settings),
@@ -218,7 +226,10 @@ class AppBar extends StatelessWidget {
               Expanded(
                 child: FlatButton(
                   height: 60,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => DetectPage()));
+                  },
                   child: Text(
                     'Detect News',
                     style: TextStyle(
