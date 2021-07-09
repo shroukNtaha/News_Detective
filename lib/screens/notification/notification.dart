@@ -11,7 +11,10 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-  bool _switchValue = true;
+  bool _switchValue1 = true;
+  bool _switchValue2 = true;
+  bool _switchValue3 = true;
+  bool _switchValue4 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,10 +39,10 @@ class _NotificationsState extends State<Notifications> {
                 children: [
                   Text("Sport",style: TextStyle(fontSize: 25.0),),
                   CupertinoSwitch(
-                    value: _switchValue,
+                    value: _switchValue1,
                     onChanged: (value) {
                       setState(() {
-                        _switchValue = value;
+                        _switchValue1 = value;
                       });
                     },
                   ),
@@ -53,10 +56,10 @@ class _NotificationsState extends State<Notifications> {
                 children: [
                   Text("Politics",style: TextStyle(fontSize: 25.0),),
                   CupertinoSwitch(
-                    value: _switchValue,
+                    value: _switchValue2,
                     onChanged: (value) {
                       setState(() {
-                        _switchValue = value;
+                        _switchValue2 = value;
                       });
                     },
                   ),
@@ -70,10 +73,10 @@ class _NotificationsState extends State<Notifications> {
                 children: [
                   Text("Art",style: TextStyle(fontSize: 25.0),),
                   CupertinoSwitch(
-                    value: _switchValue,
+                    value: _switchValue3,
                     onChanged: (value) {
                       setState(() {
-                        _switchValue = value;
+                        _switchValue3 = value;
                       });
                     },
                   ),
@@ -87,10 +90,10 @@ class _NotificationsState extends State<Notifications> {
                 children: [
                   Text("Health",style: TextStyle(fontSize: 25.0),),
                   CupertinoSwitch(
-                    value: _switchValue,
+                    value: _switchValue4,
                     onChanged: (value) {
                       setState(() {
-                        _switchValue = value;
+                        _switchValue4 = value;
                       });
                     },
                   ),

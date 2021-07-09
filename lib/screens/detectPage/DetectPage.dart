@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:news_detective/widget/appBar.dart';
+import 'package:news_detective/widget/drawer.dart';
 
+GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 class DetectPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
+        key: _scaffoldKey,
+        drawer:DrawerHome(),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Appbar(keyDrawer: _scaffoldKey,),
               // ListView(
               // children: [
               Expanded(
