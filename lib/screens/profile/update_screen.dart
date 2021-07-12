@@ -15,12 +15,14 @@ class UpdateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        drawer:DrawerHome(),
+        drawer: DrawerHome(),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Appbar(keyDrawer: _scaffoldKey,),
+              Appbar(
+                keyDrawer: _scaffoldKey,
+              ),
               Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Column(
@@ -28,10 +30,11 @@ class UpdateScreen extends StatelessWidget {
                     TextField(
                       decoration: InputDecoration(
                         hintText: name,
-                        contentPadding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black, width: 2.0),
+                          borderSide:
+                              BorderSide(color: Colors.black, width: 2.0),
                         ),
                       ),
                     ),
@@ -39,16 +42,17 @@ class UpdateScreen extends StatelessWidget {
                     TextField(
                       decoration: InputDecoration(
                         hintText: email,
-                        contentPadding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black, width: 2.0),
+                          borderSide:
+                              BorderSide(color: Colors.black, width: 2.0),
                         ),
                       ),
                     ),
                   ],
                 ),
-        ),
+              ),
 
               SizedBox(height: 20.0),
               // range of age list
@@ -61,19 +65,20 @@ class UpdateScreen extends StatelessWidget {
                     borderRadius: new BorderRadius.circular(10.0),
                     //side: BorderSide(color: Color(0xffA755BC)),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   color: Color(0xffA755BC),
                   child: Text(
                     'Update',
-                    style: TextStyle(color: Colors.white, fontSize: 35.0),
+                    style: TextStyle(color: Colors.white, fontSize: 30.0),
                   ),
                 ),
               ),
             ],
           ),
-    ));
+        ));
   }
 }
