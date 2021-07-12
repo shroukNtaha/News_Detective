@@ -1,4 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:news_detective/common/loading.dart';
+import 'package:news_detective/main.dart';
 import 'package:news_detective/services/newsService.dart';
 import 'package:flutter/material.dart';
 import 'package:news_detective/widget/appBar.dart';
@@ -13,8 +16,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-
   // getdata()async{
   //   //////////////
   //   final conn = await MySqlConnection.connect(ConnectionSettings(
@@ -45,11 +46,70 @@ class _HomeState extends State<Home> {
     print(news);
   }
 
+  var _category = "Sport";
   @override
   void initState() {
     super.initState();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channel.description,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher',
+              ),
+            ));
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body)],
+                  ),
+                ),
+              );
+            });
+      }
+    });
     getNews();
     //getdata();
+  }
+
+  void showNotification() {
+    /*setState(() {
+      _category = the category which have a new news
+    });*/
+    flutterLocalNotificationsPlugin.show(
+        0,
+        "You have new News in $_category",
+        "Don't miss out on the news",
+        NotificationDetails(
+            android: AndroidNotificationDetails(
+                channel.id, channel.name, channel.description,
+                importance: Importance.high,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher')));
   }
 
   bool loading = false;
@@ -61,11 +121,17 @@ class _HomeState extends State<Home> {
         : Scaffold(
             backgroundColor: Colors.white,
             key: _scaffoldKey,
-            drawer:DrawerHome(),
+            drawer: DrawerHome(),
             body: SafeArea(
               child: Column(
                 children: [
-                  Appbar(keyDrawer: _scaffoldKey,)
+                  Appbar(
+                    keyDrawer: _scaffoldKey,
+                  ),
+                  FlatButton.icon(
+                      onPressed: showNotification,
+                      icon: Icon(Icons.access_alarm),
+                      label: Text('Notification'))
                   // ListView(
                   //   scrollDirection: Axis.vertical,
                   //   children: [],
@@ -76,8 +142,6 @@ class _HomeState extends State<Home> {
           );
   }
 }
-
-
 
 class CategoryButton extends StatelessWidget {
   final categoryName;
