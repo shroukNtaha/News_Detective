@@ -1,6 +1,6 @@
 import 'package:news_detective/common/Repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:news_detective/models/userModel.dart';
+import 'package:news_detective/models/user.dart';
 
 class UserService {
   Repository _rep = Repository("user");
@@ -9,7 +9,7 @@ class UserService {
   final String uid;
   UserService({this.uid});
 
-  Future add(UserModel data) async {
+  Future add(User data) async {
     return await _rep.addDocument(data.toJson());
   }
 

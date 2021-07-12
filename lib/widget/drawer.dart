@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_detective/screens/authenticate/authenticate.dart';
 import 'package:news_detective/screens/notification/notification.dart';
 import 'package:news_detective/screens/profile/profile_screen.dart';
-import 'package:news_detective/services/auth.dart';
+import 'package:news_detective/services/authService.dart';
 
 class DrawerHome extends StatefulWidget {
   @override

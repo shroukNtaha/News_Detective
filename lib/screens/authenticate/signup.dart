@@ -1,6 +1,6 @@
 import 'package:loading/loading.dart';
-import 'package:news_detective/models/userModel.dart';
-import 'package:news_detective/services/auth.dart';
+import 'package:news_detective/models/user.dart';
+import 'package:news_detective/services/authService.dart';
 import 'package:news_detective/services/userService.dart';
 import 'package:news_detective/themes/input.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +24,8 @@ class _SignUpState extends State<SignUp> {
   String rangeAge = 'Select Age Range';
   String gender = 'Select Gender';
 
-  UserModel getUserData(uId) {
-    return new UserModel(
+  User getUserData(uId) {
+    return new User(
         name: name, userId: uId, email: email , gender: gender , rangeAge: rangeAge);
   }
 
@@ -174,6 +174,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
+                              //setState(() {loading = true;});
                               _auth.signUpWithEmailAndPassword(email, password)
                                 .then((result) async => {
                                   if (result != null){
@@ -188,6 +189,7 @@ class _SignUpState extends State<SignUp> {
                                   else{
                                     setState(() {
                                       error = 'this email is already used';
+                                      //loading = false;
                                     })
                                   }
                                 }

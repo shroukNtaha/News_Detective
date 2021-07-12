@@ -1,13 +1,13 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:news_detective/models/user.dart';
+import 'package:news_detective/models/authorization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/authenticate/login.dart';
 import 'screens/authenticate/signup.dart';
 import 'screens/home/home.dart';
-import 'services/auth.dart';
+import 'services/authService.dart';
 import 'wrapper.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<UserAuth>.value(
+    return StreamProvider<Authorization>.value(
       value: AuthService().user,
       child: MaterialApp(
         //theme: ThemeData(fontFamily: 'Comfortaa'),
