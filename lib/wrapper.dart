@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:news_detective/models/authorization.dart';
 import 'package:provider/provider.dart';
-import 'models/user.dart';
 import 'screens/authenticate/authenticate.dart';
 
 
@@ -18,7 +18,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserAuth>(context);
+    final user = Provider.of<Authorization>(context);
 
     if (user != null) {
       Future.delayed(Duration(seconds: 2)).then((obj) {

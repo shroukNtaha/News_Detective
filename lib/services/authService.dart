@@ -1,14 +1,14 @@
-import 'package:news_detective/models/user.dart';
+import 'package:news_detective/models/authorization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  UserAuth _userFromFirebaseUser(User user) {
-    return user != null ? UserAuth(uid: user.uid) : null;
+  Authorization _userFromFirebaseUser(User user) {
+    return user != null ? Authorization(uid: user.uid) : null;
   }
 
-  Stream<UserAuth> get user {
+  Stream<Authorization> get user {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
