@@ -174,12 +174,12 @@ class _SignUpState extends State<SignUp> {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              //setState(() {loading = true;});
+                              setState(() {loading = true;});
                               _auth.signUpWithEmailAndPassword(email, password)
                                 .then((result) async => {
                                   if (result != null){
                                     await _userService.add(getUserData(result.uid))
-                                      .then((uResult) => {
+                                      .then((uResult)=> {
                                         if (uResult != null){
                                           Navigator.of(context).pushReplacementNamed('/home')
                                         }
@@ -189,7 +189,7 @@ class _SignUpState extends State<SignUp> {
                                   else{
                                     setState(() {
                                       error = 'this email is already used';
-                                      //loading = false;
+                                      loading = false;
                                     })
                                   }
                                 }
