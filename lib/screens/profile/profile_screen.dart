@@ -1,40 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:news_detective/models/user.dart';
+import 'package:news_detective/services/authService.dart';
 import 'package:news_detective/widget/appBar.dart';
 import 'package:news_detective/widget/drawer.dart';
 import 'update_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:news_detective/services/userService.dart';
 
-User user = FirebaseAuth.instance.currentUser;
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class ProfileScreen extends StatefulWidget {
+  // final User user;
+
   @override
   _State createState() => _State();
 }
 
-String name;
-String rangeAge = '26-30';
-String gender = 'Female';
+String name = '';
+String email = '';
+String rangeAge = '';
+String gender = '';
 
 class _State extends State<ProfileScreen> {
-  String email = user.email;
+  //AuthService _auth = AuthService();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserData();
+  }
 
-  var query = FirebaseFirestore.instance
-      .collection('user')
-      .where("email", isEqualTo: user.email)
-      .get()
-      .then((QuerySnapshot querySnapshot) {
-    querySnapshot.docs.forEach((doc) {
-      name = doc["name"];
-      rangeAge = doc["rangeAge"];
-      gender = doc["gender"];
+  User user;
+  void getUserData() async {
+    String userId = await AuthService().getCurrentUser();
+    user = await UserService().getByUserId(userId);
+    setState(() {
+      name = user.name;
+      email = user.email;
+      rangeAge = user.rangeAge;
+      gender = user.gender;
     });
-  });
+  }
+
+// UserService _userService = UserService();
+
+  // UserService _userService = UserService();
+
+  // Future user = UserService().getByUserId(userId);
+  // String email = user.email;
+
+  // var query = FirebaseFirestore.instance
+  //     .collection('user')
+  //     .where("userId", isEqualTo: user.uid)
+  //     .get()
+  //     .then((QuerySnapshot querySnapshot) {
+  //   querySnapshot.docs.forEach((doc) {
+  //     name = doc["name"];
+  //     email = doc["email"];
+  //     rangeAge = doc["rangeAge"];
+  //     gender = doc["gender"];
+  //   });
+  // });
 
   @override
   Widget build(BuildContext context) {
+    // getUserData();
+
     print(email);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
