@@ -2,10 +2,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:news_detective/common/loading.dart';
 import 'package:news_detective/main.dart';
+import 'package:news_detective/models/news.dart';
+import 'package:news_detective/models/user.dart';
 import 'package:news_detective/services/newsService.dart';
 import 'package:flutter/material.dart';
+import 'package:news_detective/services/userService.dart';
 import 'package:news_detective/widget/appBar.dart';
-//import 'package:mysql1/mysql1.dart';
 import 'package:news_detective/widget/drawer.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -16,35 +18,31 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // getdata()async{
-  //   //////////////
-  //   final conn = await MySqlConnection.connect(ConnectionSettings(
-  //     host: '10.0.2.2', port: 8080, user: 'root',password: 'root', db: 'detect_news'));
-  //   // Create a table
-  //   await conn.query(
-  //     'CREATE TABLE users (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255), email varchar(255), age int)');
-  //
-  //   // Insert some data
-  //   var result = await conn.query(
-  //     'insert into users (name, email, age) values (?, ?, ?)',
-  //     ['Bob', 'bob@bob.com', 25]);
-  //   print('Inserted row id=${result.insertId}');
-  //
-  //   // Query the database using a parameterized query
-  //   var results = await conn.query(
-  //     'select name, email, age from users where id = ?', [result.insertId]);
-  //   for (var row in results) {
-  //     print('Name: ${row[0]}, email: ${row[1]} age: ${row[2]}');
-  //   }
-  //   await conn.close();
-  //   ///////////////////
-  // }
 
   NewsService apiService = NewsService();
   void getNews() async {
     List<dynamic> news = await apiService.getNews();
     print(news);
   }
+
+  NewsService _newsService = NewsService();
+  List<News> news;
+  void getdata() async{
+    news = await _newsService.get();
+    print(news[1].title);
+  }
+
+  void getNewsCategory()async{
+    news = await _newsService.getByCategory('health');
+    print(news[1].category);
+  }
+  
+  UserService _userService = UserService();
+  void getUserData() async{
+    User user = await _userService.getByUserId('8OuDEcbFBDaXQWnndWrRH3tjVqy2');
+    print(user.gender);
+  }
+
 
   var _category = "Sport";
   @override
@@ -91,8 +89,10 @@ class _HomeState extends State<Home> {
             });
       }
     });
-    getNews();
-    //getdata();
+    //getNews();
+    getdata();
+    getUserData();
+    getNewsCategory();
   }
 
   void showNotification() {

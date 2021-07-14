@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:news_detective/common/Repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:news_detective/models/news.dart';
@@ -30,5 +32,16 @@ class NewsService {
     return await _rep.addDocument(data.toJson());
   }
 
+  Future<List<News>> get() async {
+    var value = await _rep.getDataCollection();
+    List<News> news = value.docs.map((data) => News.fromMap(data.data(), data.id)).toList();
+    return news;
+  }
 
+  Future<List<News>> getByCategory(String category) async {
+    var result = await db.where("Category", isEqualTo: category).get();
+    if (result.docs.length == 0) return null;
+    List<News> news = result.docs.map((data) => News.fromMap(data.data(), data.id)).toList();
+    return news;
+  }
 }

@@ -21,20 +21,20 @@ final FirebaseFirestore _db = FirebaseFirestore.instance;
     return ref.add(data);
   }
   
-/*
+
   Future<DocumentSnapshot> getDocumentById(String id) {
-    return ref.document(id).get();
+    return ref.doc(id).get();
   }
 
 
   Future<void> removeDocument(String id){
-    return ref.document(id).delete();
+    return ref.doc(id).delete();
   }
 
 
 
   Future<void> updateDocument(Map data , String id) {
-    return ref.document(id).updateData(data) ;
-  }*/
+    return ref.doc(id).update(data) ;
+  }
 
 }

@@ -5,8 +5,9 @@ class News{
   String content;
   String source;
   String image;
-  DateTime date;
-  bool label;
+  String category;
+  /*DateTime*/String date;
+  /*bool*/ String label;
 
 
   News({
@@ -33,11 +34,12 @@ class News{
 
   News.fromMap(snapshot, id)
       : id = id ?? '',
-        title = snapshot['title'] ?? '',
-        author = snapshot['author'] ?? '',
-        content = snapshot['content'] ?? '',
-        source = snapshot['source'] ?? '',
-        image = snapshot['image'] ?? '',
-        date = snapshot['date'].toDate() ?? '',
-        label = snapshot['label'] ?? '';
+        title = snapshot['Title'] ?? '',
+        author = snapshot['Author'] ?? '',
+        content = snapshot['Content'] ?? '',
+        source = snapshot['Source'] ?? '',
+        image = snapshot['Image'] ?? '',
+        category = snapshot['Category'] ?? '',
+        date = snapshot['Date']/*.toDate()*/ ?? '',
+        label = snapshot['Label'] ?? '';
 }

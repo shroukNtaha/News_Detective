@@ -13,11 +13,16 @@ class UserService {
     return await _rep.addDocument(data.toJson());
   }
 
-  /*Future<UserDetail> getById(String userId) async {
-    var result = await db.where("userId", isEqualTo: userId).getDocuments();
-    if (result.documents.length == 0) return null;
-    var user = result.documents.first;
-    return UserDetail.fromMap(user, user.documentID);
-  }*/
+  Future<User> getByUserId(String userId) async {
+    var result = await db.where("userId", isEqualTo: userId).get();
+    if (result.docs.length == 0) return null;
+    var user = result.docs.first;
+    return User.fromMap(user, user.id);
+  }
+
+  void update(User data, String userId) async {
+    return await _rep.updateDocument(data.toJson(), userId);
+  }
+
 
 }
