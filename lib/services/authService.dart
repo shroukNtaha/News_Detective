@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  User theUser = FirebaseAuth.instance.currentUser;
 
   Authorization _userFromFirebaseUser(User user) {
     return user != null ? Authorization(uid: user.uid) : null;
@@ -22,7 +23,6 @@ class AuthService {
       print(e.toString());
       return null;
     }
-
   }
 
   Future signUpWithEmailAndPassword(String email, String password) async {
@@ -47,5 +47,9 @@ class AuthService {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<String> getCurrentUser() async {
+    return await theUser.uid;
   }
 }
