@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:news_detective/common/loading.dart';
 import 'package:news_detective/main.dart';
@@ -34,6 +35,7 @@ class _HomeState extends State<Home> {
       _categoryService.add(category);
     }
   }
+  
   NewsService apiService = NewsService();
   void getNews() async {
     List<dynamic> news = await apiService.getNews();
@@ -42,22 +44,26 @@ class _HomeState extends State<Home> {
 
   NewsService _newsService = NewsService();
   List<News> news;
-  void getdata() async{
-    news = await _newsService.get();
+  List<News> newsnews;
+
+  void getdata() async {
+    _newsService.get().then((value) => this.setState(() {
+          newsnews = value;
+        }));
+
     print(news[1].title);
   }
 
-  void getNewsCategory()async{
+  void getNewsCategory() async {
     news = await _newsService.getByCategory('health');
     print(news[1].category);
   }
-  
+
   UserService _userService = UserService();
-  void getUserData() async{
+  void getUserData() async {
     User user = await _userService.getByUserId('8OuDEcbFBDaXQWnndWrRH3tjVqy2');
     print(user.gender);
   }
-
 
   var _category = "Sport";
   @override
@@ -142,15 +148,21 @@ class _HomeState extends State<Home> {
                 children: [
                   Appbar(
                     keyDrawer: _scaffoldKey,
+                    active: 'Home',
                   ),
-                  FlatButton.icon(
-                      onPressed: showNotification,
-                      icon: Icon(Icons.access_alarm),
-                      label: Text('Notification'))
-                  // ListView(
-                  //   scrollDirection: Axis.vertical,
-                  //   children: [],
-                  // ),
+                  Expanded(
+                    flex: 1,
+                    child: FlatButton.icon(
+                        onPressed: showNotification,
+                        icon: Icon(Icons.access_alarm),
+                        label: Text('Notification')),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: ListView(scrollDirection: Axis.vertical, children: [
+                      for (var i in newsnews) newsCard(i.title, i.label)
+                    ]),
+                  ),
                 ],
               ),
             ),
@@ -158,8 +170,74 @@ class _HomeState extends State<Home> {
   }
 }
 
+class newsCard extends StatelessWidget {
+  final newsTitle;
+  final label;
+  newsCard(this.newsTitle, this.label);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        color: Color(0xFFd5d5d5),
+        child: InkWell(
+          splashColor: Colors.purple.withAlpha(30),
+          onTap: () {
+            print('Card tapped.');
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            child: SizedBox(
+              width: 200,
+              height: 150,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      newsTitle,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: label == 'REAL' ? Colors.green : Colors.red,
+                        borderRadius: new BorderRadius.circular(20),
+                      ),
+                      child: FlatButton(
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class CategoryButton extends StatelessWidget {
   final categoryName;
+
   CategoryButton(this.categoryName);
 
   @override
