@@ -2,23 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:news_detective/screens/detectPage/DetectPage.dart';
 import 'package:news_detective/screens/home/home.dart';
 import 'package:news_detective/themes/input.dart';
+import 'package:news_detective/screens/category/category.dart';
 
 class Appbar extends StatefulWidget {
   const Appbar({Key key, this.keyDrawer, this.active}) : super(key: key);
   final active;
   final keyDrawer;
+
   @override
   _AppbarState createState() => _AppbarState();
 }
 
 class _AppbarState extends State<Appbar> {
-  List<CategoryButton> categories = [
-    CategoryButton('Sports'),
-    CategoryButton('Politics'),
-    CategoryButton('Arts'),
-    CategoryButton('Health'),
-    CategoryButton('Others'),
-  ];
+  List<CategoryButton> categories = [];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -82,7 +78,14 @@ class _AppbarState extends State<Appbar> {
           height: 60,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: categories,
+            children: [
+              CategoryButton('Sports', widget.active),
+              CategoryButton('Politics', widget.active),
+              CategoryButton('Entertainment', widget.active),
+              CategoryButton('Health', widget.active),
+              CategoryButton('Technology', widget.active),
+              CategoryButton('Others', widget.active),
+            ],
           ),
         ),
         Container(
@@ -94,7 +97,10 @@ class _AppbarState extends State<Appbar> {
                 child: FlatButton(
                   color: widget.active == 'Home' ? Colors.white : null,
                   height: 60,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Home()));
+                  },
                   child: Text(
                     'Home',
                     style: TextStyle(
@@ -128,6 +134,37 @@ class _AppbarState extends State<Appbar> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class CategoryButton extends StatelessWidget {
+  final categoryName;
+  final active;
+
+  CategoryButton(this.categoryName, this.active);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            side: BorderSide(color: Colors.grey)),
+        color: categoryName == active ? Color(0xFFe8c3f1) : Colors.white,
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Category(categoryName)));
+        },
+        child: Text(
+          categoryName,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+          ),
+        ),
+      ),
     );
   }
 }

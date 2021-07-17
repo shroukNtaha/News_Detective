@@ -12,8 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:news_detective/services/userService.dart';
 import 'package:news_detective/widget/appBar.dart';
 import 'package:news_detective/widget/drawer.dart';
+import 'package:news_detective/screens/article/article.dart';
 
-GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class Home extends StatefulWidget {
   @override
@@ -21,11 +22,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  void addCategorys(){
+  void addCategorys() {
     //'Sports','Politics','Arts','Health','Others',
     CategoryService _categoryService = CategoryService();
-    List<Category> categorys ;
+    List<Category> categorys;
     categorys.add(Category(name: 'Sports'));
     categorys.add(Category(name: 'Politics'));
     categorys.add(Category(name: 'Arts'));
@@ -44,19 +44,14 @@ class _HomeState extends State<Home> {
 
   NewsService _newsService = NewsService();
   List<News> news;
-  List<News> newsnews;
+  //List<News> newsnews;
 
   void getdata() async {
-    _newsService.get().then((value) => this.setState(() {
-          newsnews = value;
+    await _newsService.get().then((value) => this.setState(() {
+          news = value;
         }));
 
     print(news[1].title);
-  }
-
-  void getNewsCategory() async {
-    news = await _newsService.getByCategory('health');
-    print(news[1].category);
   }
 
   UserService _userService = UserService();
@@ -113,7 +108,7 @@ class _HomeState extends State<Home> {
     //getNews();
     getdata();
     getUserData();
-    getNewsCategory();
+    //getNewsCategory();
   }
 
   void showNotification() {
@@ -141,13 +136,13 @@ class _HomeState extends State<Home> {
         ? Loading()
         : Scaffold(
             backgroundColor: Colors.white,
-            key: _scaffoldKey,
+            key: scaffoldKey,
             drawer: DrawerHome(),
             body: SafeArea(
               child: Column(
                 children: [
                   Appbar(
-                    keyDrawer: _scaffoldKey,
+                    keyDrawer: scaffoldKey,
                     active: 'Home',
                   ),
                   Expanded(
@@ -159,9 +154,9 @@ class _HomeState extends State<Home> {
                   ),
                   Expanded(
                     flex: 5,
-                    child: ListView(scrollDirection: Axis.vertical, children: [
-                      for (var i in newsnews) NewsCard(i.title, i.label)
-                    ]),
+                    child: ListView(
+                        scrollDirection: Axis.vertical,
+                        children: [for (var i in news) NewsCard(i)]),
                   ),
                 ],
               ),
@@ -171,9 +166,8 @@ class _HomeState extends State<Home> {
 }
 
 class NewsCard extends StatelessWidget {
-  final newsTitle;
-  final label;
-  NewsCard(this.newsTitle, this.label);
+  final News New;
+  NewsCard(this.New);
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +178,8 @@ class NewsCard extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.purple.withAlpha(30),
           onTap: () {
-            print('Card tapped.');
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Article(New)));
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
@@ -197,7 +192,7 @@ class NewsCard extends StatelessWidget {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      newsTitle,
+                      New.title,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
@@ -211,13 +206,13 @@ class NewsCard extends StatelessWidget {
                     alignment: Alignment.bottomRight,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: label == 'REAL' ? Colors.green : Colors.red,
+                        color: New.label == 'REAL' ? Colors.green : Colors.red,
                         borderRadius: new BorderRadius.circular(20),
                       ),
                       child: FlatButton(
-                        onPressed: (){},
+                        onPressed: () {},
                         child: Text(
-                          label,
+                          New.label,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -229,33 +224,6 @@ class NewsCard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CategoryButton extends StatelessWidget {
-  final categoryName;
-
-  CategoryButton(this.categoryName);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3),
-      child: FlatButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            side: BorderSide(color: Colors.grey)),
-        color: Colors.white,
-        onPressed: () {},
-        child: Text(
-          categoryName,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
           ),
         ),
       ),
