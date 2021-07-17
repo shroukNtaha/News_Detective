@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
       _categoryService.add(category);
     }
   }
-  
+
   NewsService apiService = NewsService();
   void getNews() async {
     List<dynamic> news = await apiService.getNews();
@@ -160,7 +160,7 @@ class _HomeState extends State<Home> {
                   Expanded(
                     flex: 5,
                     child: ListView(scrollDirection: Axis.vertical, children: [
-                      for (var i in newsnews) newsCard(i.title, i.label)
+                      for (var i in newsnews) NewsCard(i.title, i.label)
                     ]),
                   ),
                 ],
@@ -170,10 +170,10 @@ class _HomeState extends State<Home> {
   }
 }
 
-class newsCard extends StatelessWidget {
+class NewsCard extends StatelessWidget {
   final newsTitle;
   final label;
-  newsCard(this.newsTitle, this.label);
+  NewsCard(this.newsTitle, this.label);
 
   @override
   Widget build(BuildContext context) {
@@ -215,6 +215,7 @@ class newsCard extends StatelessWidget {
                         borderRadius: new BorderRadius.circular(20),
                       ),
                       child: FlatButton(
+                        onPressed: (){},
                         child: Text(
                           label,
                           style: TextStyle(
