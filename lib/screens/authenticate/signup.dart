@@ -21,8 +21,10 @@ class _SignUpState extends State<SignUp> {
   String email = '';
   String password = '';
   String error = '';
-  String rangeAge = 'Select Age Range';
-  String gender = 'Select Gender';
+  String rangeAge ;
+  String gender;
+  List<String> rangeAgeList = ['15-25','26-35','36-45','46-55','56-65','66'];
+  List<String> genderList = ['Male','Female','Other'];
 
   User getUserData(uId) {
     return new User(
@@ -73,7 +75,7 @@ class _SignUpState extends State<SignUp> {
                         decoration: textInputDecoration.copyWith(hintText: 'Name',
                           hintStyle: TextStyle(color: Colors.grey),),
                         validator: (val) =>
-                          val.isEmpty ? 'Enter your Name' : null,
+                          val.isEmpty ? 'Enter your name' : null,
                       ),
                       SizedBox(height: 7.0,),
                       TextFormField(
@@ -110,51 +112,45 @@ class _SignUpState extends State<SignUp> {
                       ),
                       SizedBox(height: 15.0,),
                       DropdownButtonFormField<String>(
-                        decoration: textInputDecoration.copyWith(hintText: 'Age',
+                        decoration: textInputDecoration.copyWith(hintText: 'Select Age Range',
                           hintStyle: TextStyle(color: Colors.grey),),
                         value: rangeAge,
                         icon: const Icon(Icons.arrow_drop_down),
                         iconSize: 20,
                         elevation: 16,
-                        hint: Text('Select Age Range'),
-                        validator: (val) =>
-                          val == 'Select Age Range' ? 'Select your Age Range' : null,
-                        items: <String>['Select Age Range','15-25','26-35','36-45','46-55','56-65','66']
-                            .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                            }).toList(),
-                        onChanged: (value) {
+                        validator: (val) => val == null ? 'Select your age range': null,
+                        onChanged: (String value) {
                           setState(() {
                             rangeAge = value;
                           });
                         },
+                        items: rangeAgeList.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
                       SizedBox(height: 7.0,),
                       DropdownButtonFormField<String>(
-                        decoration: textInputDecoration.copyWith(hintText: 'Gender',
+                        decoration: textInputDecoration.copyWith(hintText: 'Select Gender',
                           hintStyle: TextStyle(color: Colors.grey),),
                         value: gender,
                         icon: const Icon(Icons.arrow_drop_down),
                         iconSize: 20,
                         elevation: 16,
-                        hint: Text('Select Gender'),
-                        validator: (val) =>
-                          val == 'Select Gender' ? 'Select your Gender' : null,
-                        items: <String>['Select Gender','Male','Female','Other']
-                            .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                            }).toList(),
-                        onChanged: (value) {
+                        validator: (val) => val == null ? 'Select your gender' : null,
+                        onChanged: (String value) {
                           setState(() {
                             gender = value;
                           });
                         },
+                        items: genderList.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
                       SizedBox(height: 20.0,),
                       SizedBox(

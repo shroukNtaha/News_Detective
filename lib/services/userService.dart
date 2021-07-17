@@ -20,8 +20,8 @@ class UserService {
     return User.fromMap(user, user.id);
   }
 
-  void update(User data, String userId) async {
-    return await _rep.updateDocument(data.toJson(), userId);
+  void update(User data, String documentId) async {
+    return await _rep.updateDocument(data.toJson(), documentId);
   }
 
 

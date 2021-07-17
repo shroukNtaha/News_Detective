@@ -2,8 +2,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:news_detective/common/loading.dart';
 import 'package:news_detective/main.dart';
+import 'package:news_detective/models/category.dart';
 import 'package:news_detective/models/news.dart';
 import 'package:news_detective/models/user.dart';
+import 'package:news_detective/services/categoryService.dart';
 import 'package:news_detective/services/newsService.dart';
 import 'package:flutter/material.dart';
 import 'package:news_detective/services/userService.dart';
@@ -19,6 +21,19 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  void addCategorys(){
+    //'Sports','Politics','Arts','Health','Others',
+    CategoryService _categoryService = CategoryService();
+    List<Category> categorys ;
+    categorys.add(Category(name: 'Sports'));
+    categorys.add(Category(name: 'Politics'));
+    categorys.add(Category(name: 'Arts'));
+    categorys.add(Category(name: 'Health'));
+    categorys.add(Category(name: 'Others'));
+    for (var category in categorys) {
+      _categoryService.add(category);
+    }
+  }
   NewsService apiService = NewsService();
   void getNews() async {
     List<dynamic> news = await apiService.getNews();
