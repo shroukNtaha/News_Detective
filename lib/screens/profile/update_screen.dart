@@ -219,6 +219,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
               ),
               SizedBox(height: 25.0),
               Center(
+                // ignore: deprecated_member_use
                 child: FlatButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0),

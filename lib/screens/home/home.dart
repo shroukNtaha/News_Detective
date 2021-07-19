@@ -47,11 +47,10 @@ class _HomeState extends State<Home> {
   List<News> newsnews;
 
   void getdata() async {
-    _newsService.get().then((value) => this.setState(() {
-          newsnews = value;
-        }));
-
-    print(news[1].title);
+    _newsService.get().then((value) => 
+      this.setState(() {
+        newsnews = value;
+    }));
   }
 
   void getNewsCategory() async {
@@ -152,6 +151,7 @@ class _HomeState extends State<Home> {
                   ),
                   Expanded(
                     flex: 1,
+                    // ignore: deprecated_member_use
                     child: FlatButton.icon(
                         onPressed: showNotification,
                         icon: Icon(Icons.access_alarm),
@@ -214,6 +214,7 @@ class NewsCard extends StatelessWidget {
                         color: label == 'REAL' ? Colors.green : Colors.red,
                         borderRadius: new BorderRadius.circular(20),
                       ),
+                      // ignore: deprecated_member_use
                       child: FlatButton(
                         onPressed: (){},
                         child: Text(
@@ -245,6 +246,7 @@ class CategoryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3),
+      // ignore: deprecated_member_use
       child: FlatButton(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),

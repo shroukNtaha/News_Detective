@@ -37,6 +37,7 @@ class DetectPage extends StatelessWidget {
               //),
               SizedBox(height: 50.0),
               Center(
+                // ignore: deprecated_member_use
                 child: FlatButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0),

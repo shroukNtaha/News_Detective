@@ -91,6 +91,8 @@ class _AppbarState extends State<Appbar> {
           child: Row(
             children: [
               Expanded(
+                // ignore: deprecated_member_use
+                // ignore: deprecated_member_use
                 child: FlatButton(
                   color: widget.active == 'Home' ? Colors.white : null,
                   height: 60,
@@ -106,6 +108,7 @@ class _AppbarState extends State<Appbar> {
                 ),
               ),
               Expanded(
+                // ignore: deprecated_member_use
                 child: FlatButton(
                   color: widget.active == 'Detect' ? Colors.white : null,
                   height: 60,

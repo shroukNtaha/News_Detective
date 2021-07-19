@@ -136,6 +136,7 @@ class _State extends State<ProfileScreen> {
               ),
               SizedBox(height: 30.0),
               Center(
+                // ignore: deprecated_member_use
                 child: FlatButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0),
