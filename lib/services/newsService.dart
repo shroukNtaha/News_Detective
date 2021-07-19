@@ -44,4 +44,5 @@ class NewsService {
     List<News> news = result.docs.map((data) => News.fromMap(data.data(), data.id)).toList();
     return news;
   }
+  
 }

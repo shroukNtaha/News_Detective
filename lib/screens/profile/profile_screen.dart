@@ -15,21 +15,22 @@ class ProfileScreen extends StatefulWidget {
   _State createState() => _State();
 }
 
-String name = '';
-String email = '';
-String rangeAge = '';
-String gender = '';
 
 class _State extends State<ProfileScreen> {
-  //AuthService _auth = AuthService();
+  User user;
+
+  String name = '';
+  String email = '';
+  String rangeAge = '';
+  String gender = '';
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUserData();
   }
 
-  User user;
+  
   void getUserData() async {
     String userId = await AuthService().getCurrentUser();
     user = await UserService().getByUserId(userId);
@@ -41,32 +42,8 @@ class _State extends State<ProfileScreen> {
     });
   }
 
-// UserService _userService = UserService();
-
-  // UserService _userService = UserService();
-
-  // Future user = UserService().getByUserId(userId);
-  // String email = user.email;
-
-  // var query = FirebaseFirestore.instance
-  //     .collection('user')
-  //     .where("userId", isEqualTo: user.uid)
-  //     .get()
-  //     .then((QuerySnapshot querySnapshot) {
-  //   querySnapshot.docs.forEach((doc) {
-  //     name = doc["name"];
-  //     email = doc["email"];
-  //     rangeAge = doc["rangeAge"];
-  //     gender = doc["gender"];
-  //   });
-  // });
-
   @override
   Widget build(BuildContext context) {
-    // getUserData();
-
-    print(email);
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
@@ -157,7 +134,6 @@ class _State extends State<ProfileScreen> {
                   ],
                 ),
               ),
-
               SizedBox(height: 30.0),
               Center(
                 child: FlatButton(
@@ -169,9 +145,7 @@ class _State extends State<ProfileScreen> {
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UpdateScreen()));
+                      context,MaterialPageRoute(builder: (context) => UpdateScreen(user: user)));
                   },
                   color: Color(0xffA755BC),
                   child: Text(

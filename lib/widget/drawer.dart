@@ -120,6 +120,7 @@ class _DrawerHomeState extends State<DrawerHome> {
             ),
             onTap: () async {
               await _auth.signOut();
+              //Navigator.of(context).pushNamed(pageName);
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => Authenticate()),

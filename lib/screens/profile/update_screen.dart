@@ -1,89 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:news_detective/models/user.dart';
-import 'package:news_detective/services/authService.dart';
 import 'package:news_detective/services/userService.dart';
+import 'package:news_detective/themes/input.dart';
 import 'package:news_detective/widget/appBar.dart';
-import 'package:news_detective/widget/drawer.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'profile_screen.dart';
 import 'package:loading/loading.dart';
 
-//User user = FirebaseAuth.instance.currentUser;
-
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
 class UpdateScreen extends StatefulWidget {
+  final User user;
+  const UpdateScreen({Key key, this.user}) : super(key: key);
   @override
   _UpdateScreenState createState() => _UpdateScreenState();
 }
 
-String name = '';
-String email = '';
-String rangeAge = '';
-String gender = '';
-
 class _UpdateScreenState extends State<UpdateScreen> {
+  String name = '';
+  String email = '';
+  String rangeAge ;
+  String gender;
+  List<String> rangeAgeList = ['15-25','26-35','36-45','46-55','56-65','66'];
+  List<String> genderList = ['Male','Female','Other'];
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getUserData();
+    print(widget.user.name);
   }
 
   UserService _userService = UserService();
-  AuthService _auth = AuthService();
-  void updateUserData() async {
-    String userId = await _auth.getCurrentUser();
-    User user = await _userService.getByUserId(userId);
-    _userService.update(user, userId);
+  void updateUserData(User user) async {
+    _userService.update(user, widget.user.id);
   }
-
-  User user;
-  void getUserData() async {
-    String userId = await AuthService().getCurrentUser();
-    user = await UserService().getByUserId(userId);
-    setState(() {
-      name = user.name;
-      email = user.email;
-      rangeAge = user.rangeAge;
-      gender = user.gender;
-    });
-  }
-
-  // bool loading = false;
-  // // String email = user.email;
-  // var query = FirebaseFirestore.instance
-  //     .collection('user')
-  //     .where("userId", isEqualTo: user.uid)
-  //     .get()
-  //     .then((QuerySnapshot querySnapshot) {
-  //   querySnapshot.docs.forEach((doc) {
-  //     name = doc["name"];
-  //     email = doc["email"];
-  //     rangeAge = doc["rangeAge"];
-  //     gender = doc["gender"];
-  //   });
-  // });
-
-  // var update = FirebaseFirestore.instance
-  //     .collection('user')
-  //     .doc(user.uid)
-  //     .update({
-  //   "name": name,
-  //   "email": email,
-  //   "gender": gender,
-  //   "rangeAge": rangeAge
-  // });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
-      drawer: DrawerHome(),
+      //drawer: DrawerHome(),
       body: SafeArea(
         child: Expanded(
           child: Column(
@@ -117,12 +76,12 @@ class _UpdateScreenState extends State<UpdateScreen> {
                     SizedBox(height: 20.0),
                     TextFormField(
                       initialValue: email,
-                      // validator: (val) {
-                      //   if (!val.contains('@')) {
-                      //     return 'Enter valid email';
-                      //   }
-                      //   return null;
-                      // },
+                      /*validator: (val) {
+                        if (!val.contains('@')) {
+                          return 'Enter valid email';
+                        }
+                        return null;
+                      },*/
                       onChanged: (value) {
                         setState(() {
                           email = value;
@@ -139,7 +98,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                       ),
                     ),
                     SizedBox(height: 20.0),
-                    DropdownButtonFormField<String>(
+                    /*DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         hintText: rangeAge,
                         hintStyle: TextStyle(color: Colors.grey),
@@ -213,6 +172,47 @@ class _UpdateScreenState extends State<UpdateScreen> {
                           gender = value;
                         });
                       },
+                    ),*/
+                    DropdownButtonFormField<String>(
+                      decoration: textInputDecoration.copyWith(hintText: 'Select Age Range',
+                        hintStyle: TextStyle(color: Colors.grey),),
+                      value: rangeAge,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 20,
+                      elevation: 16,
+                      //validator: (val) => val == null ? 'Select your age range': null,
+                      onChanged: (String value) {
+                        setState(() {
+                          rangeAge = value;
+                        });
+                      },
+                      items: rangeAgeList.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(height: 7.0,),
+                    DropdownButtonFormField<String>(
+                      decoration: textInputDecoration.copyWith(hintText: 'Select Gender',
+                        hintStyle: TextStyle(color: Colors.grey),),
+                      value: gender,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 20,
+                      elevation: 16,
+                      //validator: (val) => val == null ? 'Select your gender' : null,
+                      onChanged: (String value) {
+                        setState(() {
+                          gender = value;
+                        });
+                      },
+                      items: genderList.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
                   ],
                 ),
@@ -227,45 +227,15 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   padding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
                   onPressed: () async {
-                    // if (_formKey.currentState.validate()) {
-                    //   setState(() {
-                    //     loading = true;
-                    //   });
-                    //   FirebaseFirestore.instance
-                    //       .collection("user")
-                    //       .where("userId", isEqualTo: user.uid)
-                    //       .get()
-                    //       .then((QuerySnapshot querySnapshot) {
-                    //     querySnapshot.docs.forEach((doc) {
-                    //       doc.reference.update({
-                    //         //"name": 'ooooooo',
-                    //         "name": name,
-                    //         "email": email,
-                    //         "gender": gender,
-                    //         "rangeAge": rangeAge
-                    //       });
-                    //     });
-                    //   });
-                    //   user.updateEmail(email);
-
-                    // updateUserData();
-
-                    UserService _userService = UserService();
-                    AuthService _auth = AuthService();
-                    String userId = await _auth.getCurrentUser();
-                    User user = await _userService.getByUserId(userId);
-                    print("--------------");
-                    print(userId);
-                    print(user.name);
-                    print("--------------");
-
-                    _userService.update(user, userId);
-                    // Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfileScreen()));
-                    // }
+                    /*if (_formKey.currentState.validate()) {
+                        setState(() {
+                          //loading = true;
+                        });*/
+                      User userUpdate = User(email: email, rangeAge: rangeAge, name: name, gender: gender , userId: widget.user.userId);
+                      updateUserData(userUpdate);
+                      // Navigator.pop(context);
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => ProfileScreen()));
+                    //}
                   },
                   color: Color(0xffA755BC),
                   child: Text(
