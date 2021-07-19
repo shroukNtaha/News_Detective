@@ -4,7 +4,6 @@ import 'package:news_detective/services/userService.dart';
 import 'package:news_detective/themes/input.dart';
 import 'package:news_detective/widget/appBar.dart';
 import 'profile_screen.dart';
-import 'package:loading/loading.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
