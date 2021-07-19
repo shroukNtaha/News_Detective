@@ -1,8 +1,14 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:news_detective/common/loading.dart';
+import 'package:news_detective/main.dart';
+import 'package:news_detective/models/news.dart';
+import 'package:news_detective/models/user.dart';
 import 'package:news_detective/services/newsService.dart';
 import 'package:flutter/material.dart';
+import 'package:news_detective/services/userService.dart';
 import 'package:news_detective/widget/appBar.dart';
-//import 'package:mysql1/mysql1.dart';
 import 'package:news_detective/widget/drawer.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -13,43 +19,101 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-
-  // getdata()async{
-  //   //////////////
-  //   final conn = await MySqlConnection.connect(ConnectionSettings(
-  //     host: '10.0.2.2', port: 8080, user: 'root',password: 'root', db: 'detect_news'));
-  //   // Create a table
-  //   await conn.query(
-  //     'CREATE TABLE users (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255), email varchar(255), age int)');
-  //
-  //   // Insert some data
-  //   var result = await conn.query(
-  //     'insert into users (name, email, age) values (?, ?, ?)',
-  //     ['Bob', 'bob@bob.com', 25]);
-  //   print('Inserted row id=${result.insertId}');
-  //
-  //   // Query the database using a parameterized query
-  //   var results = await conn.query(
-  //     'select name, email, age from users where id = ?', [result.insertId]);
-  //   for (var row in results) {
-  //     print('Name: ${row[0]}, email: ${row[1]} age: ${row[2]}');
-  //   }
-  //   await conn.close();
-  //   ///////////////////
-  // }
-
   NewsService apiService = NewsService();
   void getNews() async {
     List<dynamic> news = await apiService.getNews();
     print(news);
   }
 
+  NewsService _newsService = NewsService();
+  List<News> news;
+  List<News> newsnews;
+
+  void getdata() async {
+    _newsService.get().then((value) => this.setState(() {
+          newsnews = value;
+        }));
+
+    print(news[1].title);
+  }
+
+  void getNewsCategory() async {
+    news = await _newsService.getByCategory('health');
+    print(news[1].category);
+  }
+
+  UserService _userService = UserService();
+  void getUserData() async {
+    User user = await _userService.getByUserId('8OuDEcbFBDaXQWnndWrRH3tjVqy2');
+    print(user.gender);
+  }
+
+  var _category = "Sport";
   @override
   void initState() {
     super.initState();
-    getNews();
-    //getdata();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channel.description,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher',
+              ),
+            ));
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body)],
+                  ),
+                ),
+              );
+            });
+      }
+    });
+    //getNews();
+    getdata();
+    getUserData();
+    getNewsCategory();
+  }
+
+  void showNotification() {
+    /*setState(() {
+      _category = the category which have a new news
+    });*/
+    flutterLocalNotificationsPlugin.show(
+        0,
+        "You have new News in $_category",
+        "Don't miss out on the news",
+        NotificationDetails(
+            android: AndroidNotificationDetails(
+                channel.id, channel.name, channel.description,
+                importance: Importance.high,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher')));
   }
 
   bool loading = false;
@@ -61,15 +125,27 @@ class _HomeState extends State<Home> {
         : Scaffold(
             backgroundColor: Colors.white,
             key: _scaffoldKey,
-            drawer:DrawerHome(),
+            drawer: DrawerHome(),
             body: SafeArea(
               child: Column(
                 children: [
-                  Appbar(keyDrawer: _scaffoldKey,)
-                  // ListView(
-                  //   scrollDirection: Axis.vertical,
-                  //   children: [],
-                  // ),
+                  Appbar(
+                    keyDrawer: _scaffoldKey,
+                    active: 'Home',
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: FlatButton.icon(
+                        onPressed: showNotification,
+                        icon: Icon(Icons.access_alarm),
+                        label: Text('Notification')),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: ListView(scrollDirection: Axis.vertical, children: [
+                      for (var i in newsnews) newsCard(i.title, i.label)
+                    ]),
+                  ),
                 ],
               ),
             ),
@@ -77,10 +153,74 @@ class _HomeState extends State<Home> {
   }
 }
 
+class newsCard extends StatelessWidget {
+  final newsTitle;
+  final label;
+  newsCard(this.newsTitle, this.label);
 
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        color: Color(0xFFd5d5d5),
+        child: InkWell(
+          splashColor: Colors.purple.withAlpha(30),
+          onTap: () {
+            print('Card tapped.');
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            child: SizedBox(
+              width: 200,
+              height: 150,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      newsTitle,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: label == 'REAL' ? Colors.green : Colors.red,
+                        borderRadius: new BorderRadius.circular(20),
+                      ),
+                      child: FlatButton(
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class CategoryButton extends StatelessWidget {
   final categoryName;
+
   CategoryButton(this.categoryName);
 
   @override

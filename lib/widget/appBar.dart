@@ -4,14 +4,11 @@ import 'package:news_detective/screens/home/home.dart';
 import 'package:news_detective/themes/input.dart';
 
 class Appbar extends StatefulWidget {
-  const Appbar({
-    Key key,
-    this.keyDrawer,
-  }) : super(key: key);
+  const Appbar({Key key, this.keyDrawer, this.active}) : super(key: key);
+  final active;
   final keyDrawer;
   @override
   _AppbarState createState() => _AppbarState();
-
 }
 
 class _AppbarState extends State<Appbar> {
@@ -70,7 +67,10 @@ class _AppbarState extends State<Appbar> {
                   ),
                 ),
                 Expanded(
-                  child: Icon(Icons.search,size: 40.0,),
+                  child: Icon(
+                    Icons.search,
+                    size: 40.0,
+                  ),
                 ),
               ],
             ),
@@ -92,17 +92,22 @@ class _AppbarState extends State<Appbar> {
             children: [
               Expanded(
                 child: FlatButton(
-                  color: Colors.white,
+                  color: widget.active == 'Home' ? Colors.white : null,
                   height: 60,
                   onPressed: () {},
                   child: Text(
                     'Home',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color:
+                          widget.active == 'Home' ? Colors.black : Colors.white,
+                    ),
                   ),
                 ),
               ),
               Expanded(
                 child: FlatButton(
+                  color: widget.active == 'Detect' ? Colors.white : null,
                   height: 60,
                   onPressed: () {
                     Navigator.push(context,
@@ -112,7 +117,9 @@ class _AppbarState extends State<Appbar> {
                     'Detect News',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
+                      color: widget.active == 'Detect'
+                          ? Colors.black
+                          : Colors.white,
                     ),
                   ),
                 ),

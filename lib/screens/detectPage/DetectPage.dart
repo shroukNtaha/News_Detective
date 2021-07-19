@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
@@ -15,6 +16,8 @@ class DetectPage extends StatefulWidget {
   _DetectState createState() => _DetectState();
 }
 
+GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class _DetectState extends State<DetectPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String article = "";
@@ -25,10 +28,13 @@ class _DetectState extends State<DetectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
+        key: _scaffoldKey,
+        drawer:DrawerHome(),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Appbar(keyDrawer: _scaffoldKey,),
               // ListView(
               // children: [
               Expanded(

@@ -1,5 +1,5 @@
 import 'package:loading/loading.dart';
-import 'package:news_detective/services/auth.dart';
+import 'package:news_detective/services/authService.dart';
 import 'package:news_detective/themes/input.dart';
 import 'package:flutter/material.dart';
 

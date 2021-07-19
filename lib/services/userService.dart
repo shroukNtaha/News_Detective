@@ -1,6 +1,6 @@
 import 'package:news_detective/common/Repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:news_detective/models/userModel.dart';
+import 'package:news_detective/models/user.dart';
 
 class UserService {
   Repository _rep = Repository("user");
@@ -9,15 +9,20 @@ class UserService {
   final String uid;
   UserService({this.uid});
 
-  Future add(UserModel data) async {
+  Future add(User data) async {
     return await _rep.addDocument(data.toJson());
   }
 
-  /*Future<UserDetail> getById(String userId) async {
-    var result = await db.where("userId", isEqualTo: userId).getDocuments();
-    if (result.documents.length == 0) return null;
-    var user = result.documents.first;
-    return UserDetail.fromMap(user, user.documentID);
-  }*/
+  Future<User> getByUserId(String userId) async {
+    var result = await db.where("userId", isEqualTo: userId).get();
+    if (result.docs.length == 0) return null;
+    var user = result.docs.first;
+    return User.fromMap(user, user.id);
+  }
+
+  void update(User data, String userId) async {
+    return await _rep.updateDocument(data.toJson(), userId);
+  }
+
 
 }

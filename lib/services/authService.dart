@@ -1,14 +1,15 @@
-import 'package:news_detective/models/user.dart';
+import 'package:news_detective/models/authorization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  User theUser = FirebaseAuth.instance.currentUser;
 
-  UserAuth _userFromFirebaseUser(User user) {
-    return user != null ? UserAuth(uid: user.uid) : null;
+  Authorization _userFromFirebaseUser(User user) {
+    return user != null ? Authorization(uid: user.uid) : null;
   }
 
-  Stream<UserAuth> get user {
+  Stream<Authorization> get user {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
@@ -22,7 +23,6 @@ class AuthService {
       print(e.toString());
       return null;
     }
-
   }
 
   Future signUpWithEmailAndPassword(String email, String password) async {
@@ -47,5 +47,9 @@ class AuthService {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<String> getCurrentUser() async {
+    return await theUser.uid;
   }
 }
