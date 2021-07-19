@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:news_detective/services/detectArticalService.dart';
 import 'package:news_detective/widget/appBar.dart';
 
 
@@ -14,10 +13,22 @@ GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class _DetectState extends State<DetectPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  DetectArticalService _detectArticalService = DetectArticalService();
   String article = "";
   String finalResponse="";
   final articleCont = new TextEditingController();
 
+  detectArtical(TextEditingController articleCont){
+    setState(() {
+      article = articleCont.text;
+    });
+    var decoded = _detectArticalService.detectArtical(article);
+
+    //changing the UI be reassigning the fetched data to final response
+    setState(() {
+      finalResponse = decoded['article'];
+    });
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,31 +82,11 @@ class _DetectState extends State<DetectPage> {
                   ),
                   padding:
                   EdgeInsets.symmetric(vertical: 10.0, horizontal: 110.0),
-
-                  onPressed: () async
-                  {
-                      if(_formKey.currentState.validate())
-                        {
-                          print("validated");
-                          article = articleCont.text;
-
-                          setState(() {
-                            article = articleCont.text;
-                          });
-                          final url =Uri.parse("http://10.0.2.2:5000/article");
-                          final response = await http.post(url, body: json.encode({'article' : article}));
-                          final decoded = json.decode(response.body) as Map<String, dynamic>;
-
-                          //changing the UI be reassigning the fetched data to final response
-                          setState(() {
-                            finalResponse = decoded['article'];
-                          });
-                        }
-                      else
-                        {
-                          print("Not Validated");
-                        }
-
+                  onPressed: () async{
+                    if(_formKey.currentState.validate())
+                      detectArtical(articleCont);
+                    else
+                      print("Not Validated");
                   },
                   color: Color(0xffA755BC),
                   child: Text(
