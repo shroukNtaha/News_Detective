@@ -68,14 +68,19 @@ class _ArticleState extends State<Article> {
                             fontSize: 24,
                           ),
                         ),
-                        Text(
-                          'By: ' + news.author,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                        ),
                       ],
+                    ),
+                    Container(
+                      width: 100,
+                      child: Text(
+                        'By: ' + news.author,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -111,6 +116,27 @@ class _ArticleState extends State<Article> {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.bottomRight,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color:
+                              news.label == 'REAL' ? Colors.green : Colors.red,
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                        // ignore: deprecated_member_use
+                        child: FlatButton(
+                          onPressed: () {},
+                          child: Text(
+                            news.label,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],

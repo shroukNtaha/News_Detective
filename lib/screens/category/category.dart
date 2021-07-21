@@ -20,7 +20,7 @@ class _CategoryState extends State<Category> {
   List<News> news;
   void getNewsCategory() async {
     if (cat != 'Others') {
-      await _newsService
+      _newsService
           .getByCategory(cat.toString().toLowerCase())
           .then((value) => this.setState(() {
                 news = value;

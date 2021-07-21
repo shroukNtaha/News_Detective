@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
 
   NewsService _newsService = NewsService();
   List<News> news;
-  //List<News> newsnews;
+  List<News> newsnews;
 
   void getdata() async {
     await _newsService.get().then((value) => this.setState(() {
@@ -177,8 +177,8 @@ class NewsCard extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.purple.withAlpha(30),
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Article(news)));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Article(news)));
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
