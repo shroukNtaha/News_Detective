@@ -15,33 +15,49 @@ class Notifications extends StatefulWidget {
 
 class _NotificationsState extends State<Notifications> {
   User user;
-
+  User updated;
   bool _sport = false;
   bool _politics = false;
   bool _entertainment = false;
   bool _health = false;
   bool _technology = false;
+  List<NotificationModel> notificationCategory;
 
   void getUserData() async {
     String userId = await AuthService().getCurrentUser();
     user = await UserService().getByUserId(userId);
+    notificationCategory = user.notification;
+
+    setState(() {
+      updated = user;
+    });
+    for (NotificationModel not in notificationCategory) {
+      if (not.category == "sport") {
+        setState(() {
+          _sport = not.status;
+        });
+      } else if (not.category == "politics") {
+        setState(() {
+          _politics = not.status;
+        });
+      } else if (not.category == "entertainment") {
+        setState(() {
+          _entertainment = not.status;
+        });
+      } else if (not.category == "health") {
+        setState(() {
+          _health = not.status;
+        });
+      } else if (not.category == "technology") {
+        setState(() {
+          _technology = not.status;
+        });
+      }
+    }
   }
 
   UserService _userService = UserService();
   void updateUserData(User _user) async {
-    setState(() {
-      user.notification
-          .contains(NotificationModel(category: "sport", status: _sport));
-      user.notification
-          .contains(NotificationModel(category: "politics", status: _politics));
-      user.notification.contains(
-          NotificationModel(category: "entertainment", status: _entertainment));
-      user.notification
-          .contains(NotificationModel(category: "health", status: _health));
-      user.notification.contains(
-          NotificationModel(category: "technology", status: _technology));
-      _userService.update(_user, user.id);
-    });
     _userService.update(_user, user.id);
   }
 
@@ -83,7 +99,15 @@ class _NotificationsState extends State<Notifications> {
                     onChanged: (value) {
                       setState(() {
                         _sport = value;
-                        updateUserData(user);
+                        for (NotificationModel not in notificationCategory) {
+                          if (not.category == "sport") {
+                            setState(() {
+                              not.status = _sport;
+                            });
+                          }
+                        }
+                        updated.notification = notificationCategory;
+                        updateUserData(updated);
                       });
                     },
                   ),
@@ -104,7 +128,15 @@ class _NotificationsState extends State<Notifications> {
                     onChanged: (value) {
                       setState(() {
                         _politics = value;
-                        updateUserData(user);
+                        for (NotificationModel not in notificationCategory) {
+                          if (not.category == "politics") {
+                            setState(() {
+                              not.status = _politics;
+                            });
+                          }
+                        }
+                        updated.notification = notificationCategory;
+                        updateUserData(updated);
                       });
                     },
                   ),
@@ -125,7 +157,15 @@ class _NotificationsState extends State<Notifications> {
                     onChanged: (value) {
                       setState(() {
                         _health = value;
-                        updateUserData(user);
+                        for (NotificationModel not in notificationCategory) {
+                          if (not.category == "health") {
+                            setState(() {
+                              not.status = _health;
+                            });
+                          }
+                        }
+                        updated.notification = notificationCategory;
+                        updateUserData(updated);
                       });
                     },
                   ),
@@ -146,7 +186,15 @@ class _NotificationsState extends State<Notifications> {
                     onChanged: (value) {
                       setState(() {
                         _entertainment = value;
-                        updateUserData(user);
+                        for (NotificationModel not in notificationCategory) {
+                          if (not.category == "entertainment") {
+                            setState(() {
+                              not.status = _entertainment;
+                            });
+                          }
+                        }
+                        updated.notification = notificationCategory;
+                        updateUserData(updated);
                       });
                     },
                   ),
@@ -167,7 +215,15 @@ class _NotificationsState extends State<Notifications> {
                     onChanged: (value) {
                       setState(() {
                         _technology = value;
-                        updateUserData(user);
+                        for (NotificationModel not in notificationCategory) {
+                          if (not.category == "technology") {
+                            setState(() {
+                              not.status = _technology;
+                            });
+                          }
+                        }
+                        updated.notification = notificationCategory;
+                        updateUserData(updated);
                       });
                     },
                   ),

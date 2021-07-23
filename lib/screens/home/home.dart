@@ -54,12 +54,6 @@ class _HomeState extends State<Home> {
         }));
   }
 
-  UserService _userService = UserService();
-  void getUserData() async {
-    User user = await _userService.getByUserId('8OuDEcbFBDaXQWnndWrRH3tjVqy2');
-   /// print(user.gender);
-  }
-
   var _category = "Sport";
   @override
   void initState() {
@@ -107,7 +101,6 @@ class _HomeState extends State<Home> {
     });
     //getNews();
     getdata();
-    getUserData();
     //getNewsCategory();
     if (news != null) Navigator.pop(context);
   }
