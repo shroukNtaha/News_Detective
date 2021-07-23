@@ -84,7 +84,8 @@ class _ArticleState extends State<Article> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.network(news.image),
+                      child:
+                          news.image != null ? Image.network(news.image) : null,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
