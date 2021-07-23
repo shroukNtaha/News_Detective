@@ -6,8 +6,8 @@ class NotificationService {
   Repository _rep = Repository("notification");
   final db = FirebaseFirestore.instance.collection("notification");
 
-  // Future add(Notification data) async {
-  //   return await _rep.addDocument(data.toJson());
-  // }
+  Future add(NotificationOLD data) async {
+    return await _rep.addDocument(data.toJson());
+  }
 
 }

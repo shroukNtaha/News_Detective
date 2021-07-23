@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_detective/models/user.dart';
 import 'package:news_detective/screens/authenticate/authenticate.dart';
 import 'package:news_detective/screens/notification/notification.dart';
 import 'package:news_detective/screens/profile/profile_screen.dart';
-import 'package:news_detective/services/userService.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:news_detective/services/authService.dart';
 
