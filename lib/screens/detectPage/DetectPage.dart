@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_detective/services/detectArticalService.dart';
 import 'package:news_detective/widget/appBar.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DetectPage extends StatefulWidget {
 
@@ -18,16 +19,23 @@ class _DetectState extends State<DetectPage> {
   String finalResponse="";
   final articleCont = new TextEditingController();
 
-  detectArtical(TextEditingController articleCont){
+  detectArtical(TextEditingController articleCont) async{
+
+    print("validated");
     setState(() {
       article = articleCont.text;
     });
-    var decoded = _detectArticalService.detectArtical(article);
-
+    // var decoded= _detectArticalService.detectArtical(article);
+    //print(decoded);
     //changing the UI be reassigning the fetched data to final response
+    final url =Uri.parse("http://10.0.2.2:5000/article");
+    final response = await http.post(url, body: json.encode({'article' : article}));
+    final decoded = json.decode(response.body) as Map<String, dynamic>;
     setState(() {
       finalResponse = decoded['article'];
+
     });
+
   }
 
   Widget build(BuildContext context) {
@@ -58,8 +66,8 @@ class _DetectState extends State<DetectPage> {
                         border: OutlineInputBorder(),
                           hintText: "Enter the news you want to detect here"),
                       validator: (value) {
-                        if (value.isEmpty || value.contains(new RegExp(r'[0-9]'))) {
-                          return 'Enter the valid article';
+                        if (value.isEmpty || num.tryParse(value) != null) {
+                          return 'Enter Valid Article';
                         }
                         else{
                           return null;
@@ -83,8 +91,10 @@ class _DetectState extends State<DetectPage> {
                   padding:
                   EdgeInsets.symmetric(vertical: 10.0, horizontal: 110.0),
                   onPressed: () async{
-                    if(_formKey.currentState.validate())
+                    if(_formKey.currentState.validate()) {
                       detectArtical(articleCont);
+                      //print(finalResponse);
+                    }
                     else
                       print("Not Validated");
                   },
