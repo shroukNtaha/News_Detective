@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_detective/services/detectArticalService.dart';
 import 'package:news_detective/widget/appBar.dart';
 
-
 class DetectPage extends StatefulWidget {
-
   @override
   _DetectState createState() => _DetectState();
 }
@@ -15,10 +13,10 @@ class _DetectState extends State<DetectPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DetectArticalService _detectArticalService = DetectArticalService();
   String article = "";
-  String finalResponse="";
+  String finalResponse = "";
   final articleCont = new TextEditingController();
 
-  detectArtical(TextEditingController articleCont){
+  detectArtical(TextEditingController articleCont) {
     setState(() {
       article = articleCont.text;
     });
@@ -38,7 +36,10 @@ class _DetectState extends State<DetectPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Appbar(keyDrawer: _scaffoldKey,),
+              Appbar(
+                keyDrawer: _scaffoldKey,
+                active: 'Detect',
+              ),
               // ListView(
               // children: [
               Expanded(
@@ -55,18 +56,16 @@ class _DetectState extends State<DetectPage> {
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration.collapsed(
-                        border: OutlineInputBorder(),
+                          border: OutlineInputBorder(),
                           hintText: "Enter the news you want to detect here"),
                       validator: (value) {
-                        if (value.isEmpty || value.contains(new RegExp(r'[0-9]'))) {
+                        if (value.isEmpty ||
+                            value.contains(new RegExp(r'[0-9]'))) {
                           return 'Enter the valid article';
-                        }
-                        else{
+                        } else {
                           return null;
                         }
-
                       },
-
                     ),
                   ),
                 ),
@@ -81,9 +80,9 @@ class _DetectState extends State<DetectPage> {
                     //side: BorderSide(color: Color(0xffA755BC)),
                   ),
                   padding:
-                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 110.0),
-                  onPressed: () async{
-                    if(_formKey.currentState.validate())
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 110.0),
+                  onPressed: () async {
+                    if (_formKey.currentState.validate())
                       detectArtical(articleCont);
                     else
                       print("Not Validated");
@@ -98,10 +97,18 @@ class _DetectState extends State<DetectPage> {
 
               Center(
                 child: Container(
-                  color: finalResponse=="REAL" ? Colors.green : finalResponse=="FAKE" ? Colors.red : Colors.white,
+                  color: finalResponse == "REAL"
+                      ? Colors.green
+                      : finalResponse == "FAKE"
+                          ? Colors.red
+                          : Colors.white,
                   margin: EdgeInsets.symmetric(vertical: 13.0),
-                  padding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 110.0),
-                  child: Text(finalResponse,style: TextStyle(fontSize: 30.0),),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 110.0),
+                  child: Text(
+                    finalResponse,
+                    style: TextStyle(fontSize: 30.0),
+                  ),
                 ),
               )
               //Text(final_response, style: TextStyle(fontSize: 24),),

@@ -5,6 +5,7 @@ import 'package:news_detective/widget/drawer.dart';
 import 'package:news_detective/screens/home/home.dart';
 import 'package:news_detective/models/news.dart';
 import 'package:news_detective/services/newsService.dart';
+import 'package:news_detective/common/loading.dart';
 
 class Category extends StatefulWidget {
   final categoryName;
@@ -19,11 +20,13 @@ class _CategoryState extends State<Category> {
   NewsService _newsService = NewsService();
   List<News> news;
   void getNewsCategory() async {
+    if (news == null) loading = true;
     if (cat != 'Others') {
       _newsService
           .getByCategory(cat.toString().toLowerCase())
           .then((value) => this.setState(() {
                 news = value;
+                loading = false;
               }));
     } else {
       await _newsService
@@ -35,6 +38,7 @@ class _CategoryState extends State<Category> {
           .getByCategory('world')
           .then((value) => this.setState(() {
                 news = news + value;
+                loading = false;
               }));
     }
 
@@ -47,28 +51,32 @@ class _CategoryState extends State<Category> {
     getNewsCategory();
   }
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      key: scaffoldKey,
-      drawer: DrawerHome(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Appbar(
-              keyDrawer: scaffoldKey,
-              active: cat,
+    return loading
+        ? Loading()
+        : Scaffold(
+            backgroundColor: Colors.white,
+            key: scaffoldKey,
+            drawer: DrawerHome(),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Appbar(
+                    keyDrawer: scaffoldKey,
+                    active: cat,
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: ListView(
+                        scrollDirection: Axis.vertical,
+                        children: [for (var i in news) NewsCard(i)]),
+                  ),
+                ],
+              ),
             ),
-            Expanded(
-              flex: 5,
-              child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [for (var i in news) NewsCard(i)]),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }
