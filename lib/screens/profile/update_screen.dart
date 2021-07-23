@@ -17,7 +17,6 @@ class UpdateScreen extends StatefulWidget {
 
 class _UpdateScreenState extends State<UpdateScreen> {
   String name = '';
-  String email = '';
   String rangeAge;
   String gender;
   List<String> rangeAgeList = [
@@ -33,7 +32,6 @@ class _UpdateScreenState extends State<UpdateScreen> {
   void initState() {
     super.initState();
     name = widget.user.name;
-    email = widget.user.email;
     rangeAge = widget.user.rangeAge;
     gender = widget.user.gender;
     print(widget.user.name);
@@ -130,18 +128,17 @@ class _UpdateScreenState extends State<UpdateScreen> {
                 child: FlatButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0),
-//side: BorderSide(color: Color(0xffA755BC)),
                   ),
                   padding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
                   onPressed: () async {
-// if (_formKey.currentState.validate()) {
                     User userUpdate = User(
-                        email: email,
+                        email: widget.user.email,
                         rangeAge: rangeAge,
                         name: name,
                         gender: gender,
-                        userId: widget.user.userId);
+                        userId: widget.user.userId,
+                        notification: widget.user.notification);
                     updateUserData(userUpdate);
                     Navigator.push(
                         context,
