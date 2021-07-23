@@ -44,11 +44,13 @@ class _HomeState extends State<Home> {
 
   NewsService _newsService = NewsService();
   List<News> news;
-  //List<News> newsnews;
+  List<News> newsnews;
 
   void getdata() async {
+    if (news == null) loading = true;
     await _newsService.get().then((value) => this.setState(() {
           news = value;
+          loading = false;
         }));
   }
 
@@ -107,6 +109,7 @@ class _HomeState extends State<Home> {
     getdata();
     getUserData();
     //getNewsCategory();
+    if (news != null) Navigator.pop(context);
   }
 
   void showNotification() {

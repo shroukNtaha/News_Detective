@@ -7,7 +7,6 @@ import 'profile_screen.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
 class UpdateScreen extends StatefulWidget {
   final User user;
   const UpdateScreen({Key key, this.user}) : super(key: key);
@@ -18,16 +17,27 @@ class UpdateScreen extends StatefulWidget {
 class _UpdateScreenState extends State<UpdateScreen> {
   String name = '';
   String email = '';
-  String rangeAge ;
+  String rangeAge;
   String gender;
-  List<String> rangeAgeList = ['15-25','26-35','36-45','46-55','56-65','66'];
-  List<String> genderList = ['Male','Female','Other'];
+  List<String> rangeAgeList = [
+    '15-25',
+    '26-35',
+    '36-45',
+    '46-55',
+    '56-65',
+    '66'
+  ];
+  List<String> genderList = ['Male', 'Female', 'Other'];
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    name = widget.user.name;
+    email = widget.user.email;
+    rangeAge = widget.user.rangeAge;
+    gender = widget.user.gender;
     print(widget.user.name);
   }
 
@@ -61,26 +71,29 @@ class _UpdateScreenState extends State<UpdateScreen> {
                           name = value;
                         });
                       },
-                      decoration: InputDecoration(
-                        hintText: name,
+                      decoration: textInputDecoration.copyWith(
                         hintStyle: TextStyle(color: Colors.grey),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 2.0),
-                        ),
                       ),
+                      // decoration: InputDecoration(
+                      //   hintText: name,
+                      //   hintStyle: TextStyle(color: Colors.grey),
+                      //   contentPadding: EdgeInsets.symmetric(
+                      //       vertical: 10.0, horizontal: 20.0),
+                      //   focusedBorder: OutlineInputBorder(
+                      //     borderSide:
+                      //         BorderSide(color: Colors.black, width: 2.0),
+                      //   ),
+                      // ),
                     ),
-                    SizedBox(height: 20.0),
-                    TextFormField(
+                    /*SizedBox(height: 20.0),
+                     TextFormField(
                       initialValue: email,
-                      /*validator: (val) {
+                      validator: (val) {
                         if (!val.contains('@')) {
                           return 'Enter valid email';
                         }
                         return null;
-                      },*/
+                      },
                       onChanged: (value) {
                         setState(() {
                           email = value;
@@ -95,8 +108,8 @@ class _UpdateScreenState extends State<UpdateScreen> {
                               BorderSide(color: Colors.black, width: 2.0),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 20.0),
+                    ),*/
+                    SizedBox(height: 10.0),
                     /*DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         hintText: rangeAge,
@@ -173,8 +186,10 @@ class _UpdateScreenState extends State<UpdateScreen> {
                       },
                     ),*/
                     DropdownButtonFormField<String>(
-                      decoration: textInputDecoration.copyWith(hintText: 'Select Age Range',
-                        hintStyle: TextStyle(color: Colors.grey),),
+                      decoration: textInputDecoration.copyWith(
+                        hintText: 'Select Age Range',
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
                       value: rangeAge,
                       icon: const Icon(Icons.arrow_drop_down),
                       iconSize: 20,
@@ -185,17 +200,22 @@ class _UpdateScreenState extends State<UpdateScreen> {
                           rangeAge = value;
                         });
                       },
-                      items: rangeAgeList.map<DropdownMenuItem<String>>((String value) {
+                      items: rangeAgeList
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
                         );
                       }).toList(),
                     ),
-                    SizedBox(height: 7.0,),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     DropdownButtonFormField<String>(
-                      decoration: textInputDecoration.copyWith(hintText: 'Select Gender',
-                        hintStyle: TextStyle(color: Colors.grey),),
+                      decoration: textInputDecoration.copyWith(
+                        hintText: 'Select Gender',
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
                       value: gender,
                       icon: const Icon(Icons.arrow_drop_down),
                       iconSize: 20,
@@ -206,7 +226,8 @@ class _UpdateScreenState extends State<UpdateScreen> {
                           gender = value;
                         });
                       },
-                      items: genderList.map<DropdownMenuItem<String>>((String value) {
+                      items: genderList
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -227,15 +248,21 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   padding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
                   onPressed: () async {
-                    /*if (_formKey.currentState.validate()) {
-                        setState(() {
-                          //loading = true;
-                        });*/
-                      User userUpdate = User(email: email, rangeAge: rangeAge, name: name, gender: gender , userId: widget.user.userId);
-                      updateUserData(userUpdate);
-                      // Navigator.pop(context);
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => ProfileScreen()));
+                    // if (_formKey.currentState.validate()) {
+                    User userUpdate = User(
+                        email: email,
+                        rangeAge: rangeAge,
+                        name: name,
+                        gender: gender,
+                        userId: widget.user.userId);
+                    updateUserData(userUpdate);
+                    // Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()));
                     //}
+                    //  } else print("Not Valide Email");
                   },
                   color: Color(0xffA755BC),
                   child: Text(
