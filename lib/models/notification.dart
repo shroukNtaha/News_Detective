@@ -1,10 +1,10 @@
-class Notification{
+class NotificationOLD {
   String id;
   String userId;
   String content;
   DateTime date;
 
-  Notification({
+  NotificationOLD({
     this.userId,
     this.content,
   });
@@ -17,7 +17,7 @@ class Notification{
     };
   }
 
-  Notification.fromMap(snapshot, id)
+  NotificationOLD.fromMap(snapshot, id)
       : id = id ?? '',
         userId = snapshot['userId'] ?? '',
         content = snapshot['content'] ?? '',
