@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
   UserService _userService = UserService();
   void getUserData() async {
     User user = await _userService.getByUserId('8OuDEcbFBDaXQWnndWrRH3tjVqy2');
-    print(user.gender);
+   /// print(user.gender);
   }
 
   var _category = "Sport";

@@ -15,7 +15,6 @@ class ProfileScreen extends StatefulWidget {
   _State createState() => _State();
 }
 
-
 class _State extends State<ProfileScreen> {
   User user;
 
@@ -30,7 +29,6 @@ class _State extends State<ProfileScreen> {
     getUserData();
   }
 
-  
   void getUserData() async {
     String userId = await AuthService().getCurrentUser();
     user = await UserService().getByUserId(userId);
@@ -46,7 +44,7 @@ class _State extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        key: _scaffoldKey,
+        // key: _scaffoldKey,
         drawer: DrawerHome(),
         body: SafeArea(
           child: Column(
@@ -146,7 +144,9 @@ class _State extends State<ProfileScreen> {
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
                   onPressed: () {
                     Navigator.push(
-                      context,MaterialPageRoute(builder: (context) => UpdateScreen(user: user)));
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UpdateScreen(user: user)));
                   },
                   color: Color(0xffA755BC),
                   child: Text(

@@ -10,7 +10,8 @@ class UserService {
   UserService({this.uid});
 
   Future add(User data) async {
-    return await _rep.addDocument(data.toJson());
+    var jsonData = data.toJson();
+    return await _rep.addDocument(jsonData);
   }
 
   Future<User> getByUserId(String userId) async {
@@ -23,6 +24,4 @@ class UserService {
   void update(User data, String documentId) async {
     return await _rep.updateDocument(data.toJson(), documentId);
   }
-
-
 }

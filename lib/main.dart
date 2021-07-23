@@ -43,6 +43,9 @@ void main() async {
     sound: true,
   );
 
+  String token = await FirebaseMessaging.instance.getToken();
+  print("Token : $token");
+
   runApp(MyApp());
 }
 

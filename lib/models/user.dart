@@ -24,7 +24,7 @@ class User {
       "createdOn": DateTime.now(),
       "gender": gender,
       "rangeAge": rangeAge,
-      "notification": notification,
+      "notification": notification.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -49,28 +49,7 @@ class NotificationModel {
   NotificationModel({this.category, this.status});
 
   toJson() {
-    return [
-      {
-        "category": "sport",
-        "status": false,
-      },
-      {
-        "category": "politics",
-        "status": false,
-      },
-      {
-        "category": "entertainment",
-        "status": false,
-      },
-      {
-        "category": "health",
-        "status": false,
-      },
-      {
-        "category": "technology",
-        "status": false,
-      }
-    ];
+    return {"category": category, "status": status};
   }
 
   List<NotificationModel> initState() {
