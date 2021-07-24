@@ -1,13 +1,13 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:news_detective/common/loading.dart';
 import 'package:news_detective/main.dart';
-import 'package:news_detective/models/category.dart';
 import 'package:news_detective/models/news.dart';
-import 'package:news_detective/services/categoryService.dart';
 import 'package:news_detective/services/newsService.dart';
 import 'package:flutter/material.dart';
+import 'package:news_detective/themes/input.dart';
 import 'package:news_detective/widget/appBar.dart';
 import 'package:news_detective/widget/drawer.dart';
 import 'package:news_detective/screens/article/article.dart';
@@ -20,17 +20,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void addCategorys() {
-    //'Sports','Politics','Arts','Health','Others',
-    CategoryService _categoryService = CategoryService();
-    List<Category> categorys;
-    categorys.add(Category(name: 'Sports'));
-    categorys.add(Category(name: 'Politics'));
-    categorys.add(Category(name: 'Arts'));
-    categorys.add(Category(name: 'Health'));
-    categorys.add(Category(name: 'Others'));
-    for (var category in categorys) {
-      _categoryService.add(category);
+  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+  // ignore: deprecated_member_use
+  List<String> newsTitle = List<String>();
+  String selectedNews = "";
+  List<News> filteredNews;
+
+  searchByKeyword(String title) {
+    if (title != "") {
+      this.setState(() {
+        filteredNews = news.where((element) => element.title.toLowerCase().contains(title.toLowerCase())).toList();
+        print(news.length);
+        print(filteredNews.length);
+      });
+    } else {
+      this.setState(() {
+        filteredNews = news;
+      });
     }
   }
 
@@ -45,11 +51,22 @@ class _HomeState extends State<Home> {
   List<News> newsnews;
 
   void getdata() async {
+    if (mounted) { 
+      setState (() => loading = true);
+    }
     if (news == null) loading = true;
     await _newsService.get().then((value) => this.setState(() {
-          news = value;
-          loading = false;
-        }));
+      news = value;
+      filteredNews = value;
+      loading = false;
+    }));
+    if(news != null){
+      setState(() {
+        for(News val in news) {
+          newsTitle.add(val.title);
+        }
+      });
+    }
   }
 
   var _category = "Sport";
@@ -126,35 +143,120 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return loading
         ? Loading()
-        : Scaffold(
-            backgroundColor: Colors.white,
-            key: scaffoldKey,
-            drawer: DrawerHome(),
-            body: SafeArea(
-              child: Column(
-                children: [
-                  Appbar(
-                    keyDrawer: scaffoldKey,
-                    active: 'Home',
-                  ),
-                  Expanded(
-                    flex: 1,
-                    // ignore: deprecated_member_use
-                    child: FlatButton.icon(
-                        onPressed: showNotification,
-                        icon: Icon(Icons.access_alarm),
-                        label: Text('Notification')),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: ListView(
-                        scrollDirection: Axis.vertical,
-                        children: [for (var i in news) NewsCard(i)]),
-                  ),
-                ],
+        : MaterialApp(
+          home: Scaffold(
+              backgroundColor: Colors.white,
+              key: scaffoldKey,
+              drawer: DrawerHome(),
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Appbar(
+                      keyDrawer: scaffoldKey,
+                      active: 'Home',
+                    ),
+                    Expanded(
+                      flex: 1,
+                      // ignore: deprecated_member_use
+                      child: FlatButton.icon(
+                          onPressed: showNotification,
+                          icon: Icon(Icons.access_alarm),
+                          label: Text('Notification')),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Color(0xffA755BC),
+                        height: 50,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 8,
+                                child: SimpleAutoCompleteTextField(
+                                  key: key,
+                                  decoration: decor,
+                                  /*decoration: new InputDecoration(
+                                    contentPadding: EdgeInsets.all(8.0),
+                                    hintText: "Search",
+                                    suffixIcon: new Icon(Icons.search),
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                  ),*/
+                                  controller: TextEditingController(text: ""),
+                                  suggestions: newsTitle,
+                                  textChanged: (text) {
+                                    searchByKeyword(text);
+                                    setState(() {
+                                      selectedNews = text;
+                                    });
+                                  },
+                                  clearOnSubmit: false,
+                                  onFocusChanged: (value) {
+                                    return null;
+                                  },
+                                  textSubmitted: (text) {
+                                    searchByKeyword(text);
+                                    setState(() {
+                                      selectedNews = text;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: Icon(
+                                  Icons.search,
+                                  size: 40.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // child: Container(
+                      //   //height: 45.0,
+                      //   width: 220.0,
+                      //   child: SimpleAutoCompleteTextField(
+                      //     key: key,
+                      //     decoration: new InputDecoration(
+                      //       contentPadding: EdgeInsets.all(8.0),
+                      //       hintText: "Search",
+                      //       suffixIcon: new Icon(Icons.search),
+                      //       hintStyle: TextStyle(color: Colors.grey),
+                      //     ),
+                      //     controller: TextEditingController(text: ""),
+                      //     suggestions: newsTitle,
+                      //     textChanged: (text) {
+                      //       searchByKeyword(text);
+                      //       setState(() {
+                      //         selectedNews = text;
+                      //       });
+                      //     },
+                      //     clearOnSubmit: false,
+                      //     onFocusChanged: (value) {
+                      //       return null;
+                      //     },
+                      //     textSubmitted: (text) {
+                      //       searchByKeyword(text);
+                      //       setState(() {
+                      //         selectedNews = text;
+                      //       });
+                      //     },
+                      //   ),
+                      //  ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: ListView(
+                        //itemCount: this.filteredNews == null ? 0 : this.filteredNews.length,
+                          scrollDirection: Axis.vertical,
+                          children: [for (var i in filteredNews) NewsCard(i)]),
+                    ),
+                  ],
+                ),
               ),
             ),
-          );
+        );
   }
 }
 

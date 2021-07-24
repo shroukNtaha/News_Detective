@@ -58,9 +58,7 @@ class _AppbarState extends State<Appbar> {
                       color: Colors.black,
                     ),
                     textAlign: TextAlign.center,
-                    onChanged: (value){
-                      
-                    },
+                    onChanged: null,
                     decoration: decor,
                   ),
                 ),
