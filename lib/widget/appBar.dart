@@ -159,7 +159,7 @@ class CategoryButton extends StatelessWidget {
         // shape: RoundedRectangleBorder(
         //     borderRadius: BorderRadius.circular(20.0),
         //     side: BorderSide(color: Colors.grey)),
-        color: categoryName == active ? Color(0xFFe8c3f1) : Colors.white,
+        color: categoryName == active ? Color(0xFFe8c3f1) : Color(0xffA755BC),
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => Category(categoryName)));
@@ -167,7 +167,7 @@ class CategoryButton extends StatelessWidget {
         child: Text(
           categoryName,
           style: TextStyle(
-            color: Colors.black,
+            color: categoryName == active ? Colors.black : Colors.white,
             fontSize: 18,
           ),
         ),
