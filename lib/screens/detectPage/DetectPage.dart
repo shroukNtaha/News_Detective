@@ -100,8 +100,12 @@ class _DetectState extends State<DetectPage> {
                       detectArtical(articleCont);
                       //print(finalResponse);
                     }
-                    else
+                    else {
+                      //loooooooooooooooooooooading
+                      //finalResponse = "";
                       print("Not Validated");
+                      print(finalResponse);
+                    }
                   },
                   color: Color(0xffA755BC),
                   child: Text(
