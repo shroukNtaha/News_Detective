@@ -163,7 +163,7 @@ class _DrawerHomeState extends State<DrawerHome> {
               style: ElevatedButton.styleFrom(
                 primary: Color(0xffA755BC),
                 //padding: EdgeInsets.fromLTRB(80.0,20.0, 80.0, 20.0),
-                minimumSize: Size(200.0, 70.0),
+                minimumSize: Size(200.0, 60.0),
                 shape: new RoundedRectangleBorder(
                     side: BorderSide(color: Colors.black, width: 2.0),
                     borderRadius: new BorderRadius.circular(10.0)),
