@@ -180,30 +180,25 @@ class _LogInState extends State<LogIn> {
                                     color: Color(0xFFB00020), fontSize: 14.0),
                               ),
                               SizedBox(height: 25.0),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color(0xffA755BC),
-                                  //padding: EdgeInsets.fromLTRB(100.0,20.0, 100.0, 20.0),
-                                  minimumSize: Size(230.0, 70.0),
-                                  shape: new RoundedRectangleBorder(
-                                      side: BorderSide(color: Colors.black),
-                                      borderRadius:
-                                          new BorderRadius.circular(10.0)),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pushReplacementNamed("/signup");
-                                },
-                                child: Text(
-                                  'SIGN UP',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight
-                                        .bold, /*fontFamily: 'Georgia', height: 1,*/
-                                  ),
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Don't have an account ? ",
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                      )),
+                                  InkWell(
+                                      child: new Text(
+                                        "SIGN UP",
+                                        style: TextStyle(
+                                          fontSize: 23.0,
+                                          decoration: TextDecoration.underline,
+                                          color: Color(0xffA755BC),
+                                        ),
+                                      ),
+                                      onTap: () => Navigator.of(context)
+                                          .pushReplacementNamed("/signup")),
+                                ],
                               ),
                             ])),
                       ),

@@ -52,7 +52,6 @@ class _HomeState extends State<Home> {
         }));
   }
 
-  var _category = "Sport";
   @override
   void initState() {
     super.initState();
@@ -103,23 +102,6 @@ class _HomeState extends State<Home> {
     if (news != null) Navigator.pop(context);
   }
 
-  void showNotification() {
-    /*setState(() {
-      _category = the category which have a new news
-    });*/
-    flutterLocalNotificationsPlugin.show(
-        0,
-        "You have new News in $_category",
-        "Don't miss out on the news",
-        NotificationDetails(
-            android: AndroidNotificationDetails(
-                channel.id, channel.name, channel.description,
-                importance: Importance.high,
-                color: Colors.blue,
-                playSound: true,
-                icon: '@mipmap/ic_launcher')));
-  }
-
   bool loading = false;
 
   @override
@@ -136,14 +118,6 @@ class _HomeState extends State<Home> {
                   Appbar(
                     keyDrawer: scaffoldKey,
                     active: 'Home',
-                  ),
-                  Expanded(
-                    flex: 1,
-                    // ignore: deprecated_member_use
-                    child: FlatButton.icon(
-                        onPressed: showNotification,
-                        icon: Icon(Icons.access_alarm),
-                        label: Text('Notification')),
                   ),
                   Expanded(
                     flex: 5,

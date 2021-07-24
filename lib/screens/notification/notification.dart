@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:news_detective/models/user.dart';
 import 'package:news_detective/services/authService.dart';
 import 'package:news_detective/services/userService.dart';
 import 'package:news_detective/widget/appBar.dart';
 import 'package:news_detective/widget/drawer.dart';
+
+import '../../main.dart';
 
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -22,7 +25,7 @@ class _NotificationsState extends State<Notifications> {
   bool _health = false;
   bool _technology = false;
   List<NotificationModel> notificationCategory;
-
+  var _category = "Sport";
   void getUserData() async {
     String userId = await AuthService().getCurrentUser();
     user = await UserService().getByUserId(userId);
@@ -61,6 +64,23 @@ class _NotificationsState extends State<Notifications> {
     _userService.update(_user, user.id);
   }
 
+  void showNotification() {
+    /*setState(() {
+      _category = the category which have a new news
+    });*/
+    flutterLocalNotificationsPlugin.show(
+        0,
+        "You have new News in $_category",
+        "Don't miss out on the news",
+        NotificationDetails(
+            android: AndroidNotificationDetails(
+                channel.id, channel.name, channel.description,
+                importance: Importance.high,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher')));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -78,12 +98,22 @@ class _NotificationsState extends State<Notifications> {
             Appbar(
               keyDrawer: _scaffoldKey,
             ),
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Text(
-                "Notification",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Text(
+                    "Notification",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+                  ),
+                ),
+                FlatButton.icon(
+                    onPressed: showNotification,
+                    icon: Icon(Icons.access_alarm),
+                    label: Text('')),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(25.0, 0, 25.0, 10.0),
