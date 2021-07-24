@@ -18,12 +18,15 @@ class _DrawerHomeState extends State<DrawerHome> {
   void getCurrentUser() async {
     try {
       userId = await AuthService().getCurrentUser();
-    } catch (e) {
       if (userId != null) {
         setState(() {
           visiblity = true;
         });
       }
+    } catch (e) {
+      setState(() {
+        visiblity = false;
+      });
     }
   }
 
@@ -159,28 +162,18 @@ class _DrawerHomeState extends State<DrawerHome> {
             visible: !visiblity,
           ),
           Visibility(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xffA755BC),
-                //padding: EdgeInsets.fromLTRB(80.0,20.0, 80.0, 20.0),
-                minimumSize: Size(200.0, 70.0),
-                shape: new RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.black, width: 2.0),
-                    borderRadius: new BorderRadius.circular(10.0)),
+            child: ListTile(
+              leading: Icon(
+                Icons.switch_account,
+                size: 35.0,
               ),
-              onPressed: () {
+              title: Text(
+                'REGISTER',
+                style: TextStyle(fontSize: 25.0, color: Color(0xffA755BC)),
+              ),
+              onTap: () {
                 Navigator.of(context).pushReplacementNamed("/");
               },
-              child: Text(
-                'Register',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28.0,
-                  fontWeight:
-                      FontWeight.bold, /*fontFamily: 'Georgia', height: 1,*/
-                ),
-              ),
             ),
             visible: !visiblity,
           ),
