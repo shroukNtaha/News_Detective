@@ -40,6 +40,7 @@ class _SignUpState extends State<SignUp> {
         email: email,
         gender: gender,
         rangeAge: rangeAge,
+        createdOn: DateTime.now(),
         notification: NotificationModel().initState());
   }
 

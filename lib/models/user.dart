@@ -14,6 +14,7 @@ class User {
       this.userId,
       this.gender,
       this.rangeAge,
+      this.createdOn,
       this.notification});
 
   toJson() {
@@ -21,7 +22,7 @@ class User {
       "userId": userId,
       "name": name,
       "email": email,
-      "createdOn": DateTime.now(),
+      "createdOn": createdOn,
       "gender": gender,
       "rangeAge": rangeAge,
       "notification": notification.map((e) => e.toJson()).toList(),
@@ -53,6 +54,7 @@ class NotificationModel {
   }
 
   List<NotificationModel> initState() {
+    // ignore: deprecated_member_use
     List<NotificationModel> notifictaions = new List<NotificationModel>();
 
     notifictaions.add(new NotificationModel(category: "sport", status: false));
