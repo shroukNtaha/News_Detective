@@ -22,7 +22,7 @@ class _AppbarState extends State<Appbar> {
       children: [
         Container(
           color: Color(0xffA755BC),
-          height: 150,
+          height: 120,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -35,7 +35,7 @@ class _AppbarState extends State<Appbar> {
                 onPressed: () => widget.keyDrawer.currentState.openDrawer(),
               ),
               SizedBox(
-                width: 20,
+                width: 40,
               ),
               Image.asset('assets/detictive_news.jpeg'),
             ],
@@ -43,7 +43,7 @@ class _AppbarState extends State<Appbar> {
         ),
         Container(
           color: Color(0xffA755BC),
-          height: 50,
+          height: 35,
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Row(
@@ -51,17 +51,18 @@ class _AppbarState extends State<Appbar> {
               children: [
                 Expanded(
                   flex: 8,
-                  child: TextField(
-                    cursorColor: Colors.black,
-                    obscureText: true,
-                    style: TextStyle(
-                      color: Colors.black,
+                  child: Container(
+                    height: 35,
+                    child: TextField(
+                      cursorColor: Colors.black,
+                      obscureText: false,
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {},
+                      decoration: decor,
                     ),
-                    textAlign: TextAlign.center,
-                    onChanged: (value){
-                      
-                    },
-                    decoration: decor,
                   ),
                 ),
                 Expanded(
@@ -152,12 +153,12 @@ class CategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       // ignore: deprecated_member_use
       child: FlatButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            side: BorderSide(color: Colors.grey)),
+        // shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(20.0),
+        //     side: BorderSide(color: Colors.grey)),
         color: categoryName == active ? Color(0xFFe8c3f1) : Colors.white,
         onPressed: () {
           Navigator.push(context,
