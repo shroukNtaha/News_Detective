@@ -20,20 +20,19 @@ class _DetectState extends State<DetectPage> {
 
 
   detectArtical(TextEditingController articleCont) async {
-
-
     setState(() {
       article = articleCont.text;
     });
     if (_formKey.currentState.validate()){
       print("validated");
       //changing the UI be reassigning the fetched data to final response
-      final url = Uri.parse("http://10.0.2.2:5000/article");
+      final url = Uri.parse("http://10.0.2.2:5000/article"); // use 10.0.2.2 to connect android to computer
       final response = await http.post(
-          url, body: json.encode({'article': article}));
+          url, body: json.encode({'article': article})); // convert pair {'article': 'input article from flutter'} to json
+      // convert response from json to map {'article' : fake / real}
       final decoded = json.decode(response.body) as Map<String, dynamic>;
       setState(() {
-        finalResponse = decoded['article'];
+        finalResponse = decoded['article'];  // detected result (fake / real)
       });
     }
     else {
