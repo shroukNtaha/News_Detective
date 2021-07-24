@@ -183,7 +183,7 @@ class _LogInState extends State<LogIn> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Don't have an account? ",
+                                  Text("Don't have an account ? ",
                                       style: TextStyle(
                                         fontSize: 20.0,
                                       )),

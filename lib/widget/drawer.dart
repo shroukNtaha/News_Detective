@@ -18,12 +18,15 @@ class _DrawerHomeState extends State<DrawerHome> {
   void getCurrentUser() async {
     try {
       userId = await AuthService().getCurrentUser();
-    } catch (e) {
       if (userId != null) {
         setState(() {
           visiblity = true;
         });
       }
+    } catch (e) {
+      setState(() {
+        visiblity = false;
+      });
     }
   }
 
