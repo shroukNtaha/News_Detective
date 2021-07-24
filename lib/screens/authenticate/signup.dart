@@ -40,6 +40,7 @@ class _SignUpState extends State<SignUp> {
         email: email,
         gender: gender,
         rangeAge: rangeAge,
+        createdOn: DateTime.now(),
         notification: NotificationModel().initState());
   }
 
@@ -267,6 +268,33 @@ class _SignUpState extends State<SignUp> {
                             error,
                             style: TextStyle(
                                 color: Color(0xFFB00020), fontSize: 14.0),
+                          ),
+                          SizedBox(height: 25.0),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Color(0xffA755BC),
+                              //padding: EdgeInsets.fromLTRB(80.0,20.0, 80.0, 20.0),
+                              minimumSize: Size(230.0, 70.0),
+                              shape: new RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      color: Colors.black, width: 2.5),
+                                  borderRadius:
+                                      new BorderRadius.circular(10.0)),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed("/login");
+                            },
+                            child: Text(
+                              'LOG IN',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight
+                                    .bold, /*fontFamily: 'Georgia', height: 1,*/
+                              ),
+                            ),
                           ),
                         ]),
                       ),

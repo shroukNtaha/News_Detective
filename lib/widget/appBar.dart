@@ -58,7 +58,9 @@ class _AppbarState extends State<Appbar> {
                       color: Colors.black,
                     ),
                     textAlign: TextAlign.center,
-                    onChanged: null,
+                    onChanged: (value){
+                      
+                    },
                     decoration: decor,
                   ),
                 ),
@@ -151,6 +153,7 @@ class CategoryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3),
+      // ignore: deprecated_member_use
       child: FlatButton(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),

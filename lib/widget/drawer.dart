@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_detective/models/user.dart';
 import 'package:news_detective/screens/authenticate/authenticate.dart';
 import 'package:news_detective/screens/notification/notification.dart';
 import 'package:news_detective/screens/profile/profile_screen.dart';
-import 'package:news_detective/services/userService.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:news_detective/services/authService.dart';
 
@@ -13,10 +11,28 @@ class DrawerHome extends StatefulWidget {
 }
 
 class _DrawerHomeState extends State<DrawerHome> {
+  bool visiblity = false;
   AuthService _auth = AuthService();
   bool _isVisible = false;
+  String userId;
+  void getCurrentUser() async {
+    try {
+      userId = await AuthService().getCurrentUser();
+    } catch (e) {
+      if (userId != null) {
+        setState(() {
+          visiblity = true;
+        });
+      }
+    }
+  }
 
   @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -30,33 +46,39 @@ class _DrawerHomeState extends State<DrawerHome> {
               image: AssetImage("assets/detictive_news.jpeg"),
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.account_circle,
-              size: 35.0,
+          Visibility(
+            child: ListTile(
+              leading: Icon(
+                Icons.account_circle,
+                size: 35.0,
+              ),
+              title: Text(
+                'Profile',
+                style: TextStyle(fontSize: 23.0),
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()));
+              },
             ),
-            title: Text(
-              'Profile',
-              style: TextStyle(fontSize: 23.0),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
-            },
+            visible: visiblity,
           ),
-          ListTile(
-            leading: Icon(
-              Icons.alarm,
-              size: 35.0,
+          Visibility(
+            child: ListTile(
+              leading: Icon(
+                Icons.alarm,
+                size: 35.0,
+              ),
+              title: Text(
+                'Notification',
+                style: TextStyle(fontSize: 23.0),
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Notifications()));
+              },
             ),
-            title: Text(
-              'Notification',
-              style: TextStyle(fontSize: 23.0),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Notifications()));
-            },
+            visible: visiblity,
           ),
           ListTile(
             leading: Icon(
@@ -111,23 +133,56 @@ class _DrawerHomeState extends State<DrawerHome> {
               style: TextStyle(fontSize: 23.0),
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.exit_to_app /*logout*/,
-              size: 35.0,
+          Visibility(
+            child: ListTile(
+              leading: Icon(
+                Icons.exit_to_app /*logout*/,
+                size: 35.0,
+              ),
+              title: Text(
+                'Signout',
+                style: TextStyle(fontSize: 23.0),
+              ),
+              onTap: () async {
+                await _auth.signOut();
+                //Navigator.of(context).pushNamed(pageName);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Authenticate()),
+                );
+              },
             ),
-            title: Text(
-              'Signout',
-              style: TextStyle(fontSize: 23.0),
+            visible: visiblity,
+          ),
+          Visibility(
+            child: SizedBox(height: 50.0),
+            visible: !visiblity,
+          ),
+          Visibility(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xffA755BC),
+                //padding: EdgeInsets.fromLTRB(80.0,20.0, 80.0, 20.0),
+                minimumSize: Size(200.0, 60.0),
+                shape: new RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.black, width: 2.0),
+                    borderRadius: new BorderRadius.circular(10.0)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed("/");
+              },
+              child: Text(
+                'Register',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28.0,
+                  fontWeight:
+                      FontWeight.bold, /*fontFamily: 'Georgia', height: 1,*/
+                ),
+              ),
             ),
-            onTap: () async {
-              await _auth.signOut();
-              //Navigator.of(context).pushNamed(pageName);
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Authenticate()),
-              );
-            },
+            visible: !visiblity,
           ),
         ],
       ),

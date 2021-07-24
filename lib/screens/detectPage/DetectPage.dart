@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_detective/services/detectArticalService.dart';
 import 'package:news_detective/widget/appBar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -14,7 +13,6 @@ GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class _DetectState extends State<DetectPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  DetectArticalService _detectArticalService = DetectArticalService();
   String article = "";
   String finalResponse = "";
   final articleCont = new TextEditingController();
@@ -86,6 +84,7 @@ class _DetectState extends State<DetectPage> {
               //),
               SizedBox(height: 50.0),
               Center(
+                // ignore: deprecated_member_use
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0),

@@ -138,6 +138,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                         name: name,
                         gender: gender,
                         userId: widget.user.userId,
+                        createdOn: widget.user.createdOn,
                         notification: widget.user.notification);
                     updateUserData(userUpdate);
                     Navigator.push(
