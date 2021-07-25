@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loading/loading.dart';
+import 'package:news_detective/screens/authenticate/login.dart';
+import 'package:news_detective/screens/authenticate/signup.dart';
+import 'package:news_detective/screens/home/home.dart';
 
 class Authenticate extends StatefulWidget {
   @override
@@ -33,7 +36,8 @@ class _AuthenticateState extends State<Authenticate> {
                     borderRadius: new BorderRadius.circular(10.0)),
                 ), 
                 onPressed: () { 
-                  Navigator.of(context).pushReplacementNamed("/signup");
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUp()));
+                  //Navigator.of(context).pushReplacementNamed("/signup");
                 },
                 child: Text(
                   'SIGN UP',
@@ -52,7 +56,8 @@ class _AuthenticateState extends State<Authenticate> {
                     borderRadius: new BorderRadius.circular(10.0)),
                 ), 
                 onPressed: () { 
-                  Navigator.of(context).pushReplacementNamed("/login");
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogIn()));
+                  //Navigator.of(context).pushReplacementNamed("/login");
                 },
                 child: Text(
                   'LOG IN',
@@ -65,7 +70,8 @@ class _AuthenticateState extends State<Authenticate> {
                 child: new Text("TAKE ME TO NEWS" ,
                   style: TextStyle(fontSize: 20.0,decoration: TextDecoration.underline,
                     color: Colors.black,),),
-                onTap: () => Navigator.of(context).pushReplacementNamed("/home") 
+                onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(),))
+                //onTap: () => Navigator.of(context).pushReplacementNamed("/home") 
               ),
               /*GestureDetector(
                 child: new Text("TAKE ME TO NEWS" ,

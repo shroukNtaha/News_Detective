@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_detective/screens/detectPage/DetectPage.dart';
 import 'package:news_detective/screens/home/home.dart';
-import 'package:news_detective/themes/input.dart';
 import 'package:news_detective/screens/category/category.dart';
+//import 'package:news_detective/themes/input.dart';
 
 class Appbar extends StatefulWidget {
   const Appbar({Key key, this.keyDrawer, this.active}) : super(key: key);
@@ -41,40 +41,40 @@ class _AppbarState extends State<Appbar> {
             ],
           ),
         ),
-        Container(
-          color: Color(0xffA755BC),
-          height: 35,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 8,
-                  child: Container(
-                    height: 35,
-                    child: TextField(
-                      cursorColor: Colors.black,
-                      obscureText: false,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center,
-                      onChanged: (value) {},
-                      decoration: decor,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Icon(
-                    Icons.search,
-                    size: 40.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        // Container(
+        //   color: Color(0xffA755BC),
+        //   height: 35,
+        //   child: Padding(
+        //     padding: const EdgeInsets.only(left: 10),
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       children: [
+        //         Expanded(
+        //           flex: 8,
+        //           child: Container(
+        //             height: 35,
+        //             child: TextField(
+        //               cursorColor: Colors.black,
+        //               obscureText: false,
+        //               style: TextStyle(
+        //                 color: Colors.black,
+        //               ),
+        //               textAlign: TextAlign.center,
+        //               onChanged: (value) {},
+        //               decoration: decor,
+        //             ),
+        //           ),
+        //         ),
+        //         Expanded(
+        //           child: Icon(
+        //             Icons.search,
+        //             size: 40.0,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         Container(
           padding: EdgeInsets.all(10),
           color: Color(0xffA755BC),

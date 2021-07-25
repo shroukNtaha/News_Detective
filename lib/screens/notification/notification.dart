@@ -109,6 +109,7 @@ class _NotificationsState extends State<Notifications> {
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
                   ),
                 ),
+                // ignore: deprecated_member_use
                 FlatButton.icon(
                     onPressed: showNotification,
                     icon: Icon(Icons.access_alarm),

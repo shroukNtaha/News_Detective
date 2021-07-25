@@ -137,17 +137,18 @@ class _HomeState extends State<Home> {
                       keyDrawer: scaffoldKey,
                       active: 'Home',
                     ),
-                    Expanded(
-                      child: Container(
-                        color: Color(0xffA755BC),
-                        height: 50,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                flex: 8,
+                    Container(
+                      //color: Color(0xffA755BC),
+                      height: 45,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 8,
+                              child: Container(
+                                height: 35,
                                 child: SimpleAutoCompleteTextField(
                                   key: key,
                                   decoration: decor,
@@ -177,16 +178,17 @@ class _HomeState extends State<Home> {
                                   },
                                 ),
                               ),
-                              Expanded(
-                                child: Icon(
-                                  Icons.search,
-                                  size: 40.0,
-                                ),
+                            ),
+                            Expanded(
+                              child: Icon(
+                                Icons.search,
+                                size: 40.0,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
+                    ),
                       // child: Container(
                       //   //height: 45.0,
                       //   width: 220.0,
@@ -218,7 +220,6 @@ class _HomeState extends State<Home> {
                       //     },
                       //   ),
                       //  ),
-                    ),
                     Expanded(
                       flex: 5,
                       child: ListView(

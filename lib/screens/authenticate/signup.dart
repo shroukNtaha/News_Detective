@@ -1,5 +1,7 @@
 import 'package:loading/loading.dart';
 import 'package:news_detective/models/user.dart';
+import 'package:news_detective/screens/authenticate/login.dart';
+import 'package:news_detective/screens/home/home.dart';
 import 'package:news_detective/services/authService.dart';
 import 'package:news_detective/services/userService.dart';
 import 'package:news_detective/themes/input.dart';
@@ -243,10 +245,8 @@ class _SignUpState extends State<SignUp> {
                                                     .then((uResult) => {
                                                           if (uResult != null)
                                                             {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pushReplacementNamed(
-                                                                      '/home')
+                                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()))
+                                                              //Navigator.of(context).pushReplacementNamed('/home')
                                                             }
                                                         }),
                                               }
@@ -286,8 +286,9 @@ class _SignUpState extends State<SignUp> {
                                       color: Color(0xffA755BC),
                                     ),
                                   ),
-                                  onTap: () => Navigator.of(context)
-                                      .pushReplacementNamed("/login")),
+                                  onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogIn()))
+                                  //onTap: () => Navigator.of(context).pushReplacementNamed("/login")
+                                ),
                             ],
                           ),
                         ]),

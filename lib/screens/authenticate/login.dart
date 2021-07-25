@@ -1,4 +1,6 @@
 import 'package:loading/loading.dart';
+import 'package:news_detective/screens/authenticate/signup.dart';
+import 'package:news_detective/screens/home/home.dart';
 import 'package:news_detective/services/authService.dart';
 import 'package:news_detective/themes/input.dart';
 import 'package:flutter/material.dart';
@@ -139,8 +141,8 @@ class _LogInState extends State<LogIn> {
                                           loading = false;
                                         });
                                       } else {
-                                        Navigator.of(context)
-                                            .pushReplacementNamed("/home");
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+                                        //Navigator.of(context).pushReplacementNamed("/home");
                                       }
                                     }
                                   },
@@ -196,8 +198,9 @@ class _LogInState extends State<LogIn> {
                                           color: Color(0xffA755BC),
                                         ),
                                       ),
-                                      onTap: () => Navigator.of(context)
-                                          .pushReplacementNamed("/signup")),
+                                      onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUp()))
+                                      //Navigator.of(context).pushReplacementNamed("/signup")
+                                  ),
                                 ],
                               ),
                             ])),

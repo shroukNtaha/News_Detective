@@ -83,16 +83,16 @@ class _DrawerHomeState extends State<DrawerHome> {
             ),
             visible: visiblity,
           ),
-          ListTile(
-            leading: Icon(
-              Icons.info /*contact_support*/,
-              size: 35.0,
-            ),
-            title: Text(
-              'About us',
-              style: TextStyle(fontSize: 23.0),
-            ),
-          ),
+          // ListTile(
+          //   leading: Icon(
+          //     Icons.info /*contact_support*/,
+          //     size: 35.0,
+          //   ),
+          //   title: Text(
+          //     'About us',
+          //     style: TextStyle(fontSize: 23.0),
+          //   ),
+          // ),
           ListTile(
             leading: Icon(
               Icons.contact_mail,
@@ -126,16 +126,16 @@ class _DrawerHomeState extends State<DrawerHome> {
               ),
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.feedback,
-              size: 35.0,
-            ),
-            title: Text(
-              'Help & feedback',
-              style: TextStyle(fontSize: 23.0),
-            ),
-          ),
+          // ListTile(
+          //   leading: Icon(
+          //     Icons.feedback,
+          //     size: 35.0,
+          //   ),
+          //   title: Text(
+          //     'Help & feedback',
+          //     style: TextStyle(fontSize: 23.0),
+          //   ),
+          // ),
           Visibility(
             child: ListTile(
               leading: Icon(
@@ -172,7 +172,10 @@ class _DrawerHomeState extends State<DrawerHome> {
                 style: TextStyle(fontSize: 25.0, color: Color(0xffA755BC)),
               ),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed("/");
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Authenticate()),
+                );
               },
             ),
             visible: !visiblity,
