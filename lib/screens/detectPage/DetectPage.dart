@@ -67,7 +67,8 @@ class _DetectState extends State<DetectPage> {
                     child: TextFormField(
                       minLines: 100,
                       controller: articleCont,
-                      cursorColor: Color(0xffA755BC),
+                      cursorC
+                        olor: Color(0xffA755BC),
                       //  minLines: 30,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
