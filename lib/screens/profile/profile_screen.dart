@@ -44,7 +44,7 @@ class _State extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        // key: _scaffoldKey,
+        key: _scaffoldKey,
         drawer: DrawerHome(),
         body: SafeArea(
           child: Column(
